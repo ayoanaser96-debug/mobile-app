@@ -441,14 +441,26 @@ export default function DoctorDashboard() {
                           labelLine={false}
                           label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                           outerRadius={80}
-                          fill="#8884d8"
+                          fill="hsl(168.4 83.8% 78.2%)"
                           dataKey="value"
+                          animationBegin={0}
+                          animationDuration={1000}
                         >
                           {diseaseDistribution.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={entry.color || `hsl(${168.4 + index * 10} 83.8% ${78.2 + index * 2}%)`}
+                            />
                           ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                   </CardContent>
@@ -460,14 +472,40 @@ export default function DoctorDashboard() {
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={performanceData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="cases" stroke="#8884d8" name="Cases" />
-                        <Line type="monotone" dataKey="prescriptions" stroke="#82ca9d" name="Prescriptions" />
+                      <LineChart data={performanceData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                        <XAxis dataKey="name" stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                          cursor={{ stroke: 'hsl(168.4 83.8% 65%)', strokeWidth: 2 }}
+                        />
+                        <Legend wrapperStyle={{ color: 'hsl(168.4 83.8% 65%)' }} />
+                        <Line 
+                          type="monotone" 
+                          dataKey="cases" 
+                          stroke="hsl(168.4 90% 75%)" 
+                          strokeWidth={3}
+                          name="Cases"
+                          dot={{ r: 5, fill: 'hsl(168.4 90% 75%)' }}
+                          activeDot={{ r: 8 }}
+                          animationDuration={1000}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="prescriptions" 
+                          stroke="hsl(168.4 83.8% 65%)" 
+                          strokeWidth={3}
+                          name="Prescriptions"
+                          dot={{ r: 5, fill: 'hsl(168.4 83.8% 65%)' }}
+                          activeDot={{ r: 8 }}
+                          animationDuration={1000}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </CardContent>

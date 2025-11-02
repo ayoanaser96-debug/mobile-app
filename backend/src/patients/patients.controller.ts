@@ -8,9 +8,11 @@ import {
   UseGuards,
   Request,
   Query,
+  NotFoundException,
 } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { PatientsEnhancedService } from './patients-enhanced.service';
+import { PatientJourneyService } from './patient-journey.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -21,6 +23,7 @@ export class PatientsController {
   constructor(
     private readonly patientsService: PatientsService,
     private readonly patientsEnhancedService: PatientsEnhancedService,
+    private readonly patientJourneyService: PatientJourneyService,
   ) {}
 
   @Get('profile')
@@ -86,5 +89,66 @@ export class PatientsController {
   @Get('health-dashboard')
   async getHealthDashboard(@Request() req) {
     return this.patientsEnhancedService.getHealthDashboard(req.user.id);
+  }
+
+  // Patient Journey Endpoints
+  @Post('journey/check-in')
+  async checkIn(@Request() req) {
+    const patientId = req.user.id;
+    const patientData = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      phone: req.user.phone,
+    };
+    const journey = await this.patientJourneyService.checkIn(patientId, patientData);
+    return journey;
+  }
+
+  @Get('journey')
+  async getJourney(@Request() req) {
+    const patientId = req.user.id;
+    try {
+      const journey = await this.patientJourneyService.getJourney(patientId);
+      return journey;
+    } catch (error: any) {
+      if (error instanceof NotFoundException) {
+        return null;
+      }
+      throw error;
+    }
+  }
+
+  @Get('journey/active')
+  @UseGuards(RolesGuard)
+  @Roles('admin', 'analyst', 'doctor', 'pharmacy')
+  async getAllActiveJourneys() {
+    const journeys = await this.patientJourneyService.getAllActiveJourneys();
+    return journeys;
+  }
+
+  @Post('journey/:step/complete')
+  @UseGuards(RolesGuard)
+  @Roles('admin', 'analyst', 'doctor', 'pharmacy')
+  async markStepComplete(
+    @Param('step') step: string,
+    @Request() req,
+    @Body() body: { patientId: string; notes?: string },
+  ) {
+    const { JourneyStep, JourneyStatus } = await import('./schemas/patient-journey.schema');
+    return this.patientJourneyService.updateStep(
+      body.patientId,
+      step as any,
+      JourneyStatus.COMPLETED,
+      req.user.id,
+      body.notes,
+    );
+  }
+
+  @Get('journey/receipt')
+  async getReceipt(@Request() req) {
+    const patientId = req.user.id;
+    const receipt = await this.patientJourneyService.generateReceipt(patientId);
+    return receipt;
   }
 }

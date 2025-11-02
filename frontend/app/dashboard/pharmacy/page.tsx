@@ -898,12 +898,33 @@ export default function PharmacyDashboard() {
                 <CardContent>
                   {topMedications.length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={topMedications.slice(0, 10)}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="count" fill="#8884d8" name="Prescriptions" />
+                      <BarChart data={topMedications.slice(0, 10)} margin={{ top: 5, right: 30, left: 20, bottom: 100 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                        <XAxis 
+                          dataKey="name" 
+                          angle={-45} 
+                          textAnchor="end" 
+                          height={100} 
+                          stroke="hsl(168.4 83.8% 65%)"
+                          tick={{ fill: 'hsl(168.4 83.8% 65%)' }}
+                        />
+                        <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                          cursor={{ fill: 'hsl(168.4 83.8% 65% / 10%)' }}
+                        />
+                        <Bar 
+                          dataKey="count" 
+                          fill="hsl(168.4 90% 75%)" 
+                          name="Prescriptions"
+                          radius={[8, 8, 0, 0]}
+                          animationDuration={1000}
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                   ) : (

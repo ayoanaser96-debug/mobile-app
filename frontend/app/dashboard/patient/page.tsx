@@ -42,7 +42,8 @@ import {
   User,
   CreditCard,
   Building2,
-  Scan
+  Scan,
+  MapPin
 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { 
@@ -262,7 +263,11 @@ export default function PatientDashboard() {
 
   const handleSaveSettings = async () => {
     try {
-      await api.put('/patients/profile', { preferences: { ...settings, theme, language } });
+      // Save to backend
+      await api.put('/admin/settings', { theme, language }).catch(() => {
+        // Fallback to profile update if not available
+        return api.put('/patients/profile', { preferences: { ...settings, theme, language } });
+      });
       toast({ title: 'Success', description: 'Settings saved successfully' });
     } catch (error: any) {
       toast({
@@ -393,7 +398,7 @@ export default function PatientDashboard() {
               Patient Portal
             </h1>
             <p className="text-muted-foreground mt-1">
-              Unified medical journey • Smart appointments • AI insights
+              Smart appointments • AI insights • Health tracking
             </p>
           </div>
           <div className="flex gap-2">
@@ -521,61 +526,33 @@ export default function PatientDashboard() {
 
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-10">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="journey">Medical Journey</TabsTrigger>
             <TabsTrigger value="appointments">Appointments</TabsTrigger>
             <TabsTrigger value="health-records">Health Records</TabsTrigger>
             <TabsTrigger value="prescriptions">Prescriptions</TabsTrigger>
             <TabsTrigger value="billing">Billing</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="communication">Chat</TabsTrigger>
-            <TabsTrigger value="monitoring">Self-Monitor</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-4">
-            {/* Unified Timeline Preview */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Medical Journey</CardTitle>
-                <CardDescription>Your latest activities across all systems</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {unifiedJourney?.timeline && unifiedJourney.timeline.length > 0 ? (
-                  <div className="space-y-3">
-                    {unifiedJourney.timeline.slice(0, 5).map((item: any, idx: number) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 border rounded-lg hover:bg-accent/10 dark:hover:bg-accent/20 transition-colors">
-                        <div className="mt-1">{getTypeIcon(item.type)}</div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <p className="font-medium">{item.title}</p>
-                            <Badge className={getStatusColor(item.status)}>{item.status}</Badge>
-                          </div>
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {new Date(item.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground text-center py-8">No recent activity</p>
-                )}
-                <Button
-                  variant="outline"
-                  className="w-full mt-4"
-                  onClick={() => setActiveTab('journey')}
-                >
-                  View Full Journey
-                </Button>
-              </CardContent>
-            </Card>
 
             {/* Quick Actions */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <Card className="cursor-pointer hover:bg-accent/10 dark:hover:bg-accent/20 transition-colors" onClick={() => router.push('/dashboard/patient/journey')}>
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <MapPin className="h-5 w-5" />
+                    Track Journey
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">View your clinic visit progress</p>
+                </CardContent>
+              </Card>
               <Card className="cursor-pointer hover:bg-accent/10 dark:hover:bg-accent/20 transition-colors" onClick={() => handleBookAppointment()}>
                 <CardHeader>
                   <CardTitle className="text-base flex items-center gap-2">
@@ -626,90 +603,6 @@ export default function PatientDashboard() {
             </div>
           </TabsContent>
 
-          {/* Medical Journey Tab */}
-          <TabsContent value="journey" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Unified Medical Journey</CardTitle>
-                <CardDescription>Complete timeline of your medical history across all portals</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {unifiedJourney?.timeline && unifiedJourney.timeline.length > 0 ? (
-                  <div className="space-y-4">
-                    {unifiedJourney.timeline.map((item: any, idx: number) => (
-                      <Card key={idx} className="border-l-4 border-l-primary">
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-3 flex-1">
-                              <div className="mt-1">{getTypeIcon(item.type)}</div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <p className="font-medium">{item.title}</p>
-                                  <Badge className={getStatusColor(item.status)}>{item.status}</Badge>
-                                  <span className="text-xs text-muted-foreground">
-                                    {new Date(item.date).toLocaleDateString()}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
-                                
-                                {/* Type-specific details */}
-                                {item.type === 'prescription' && item.data && (
-                                  <div className="mt-2 p-2 bg-blue-50 rounded text-sm">
-                                    <p className="font-medium mb-1">Medications:</p>
-                                    <ul className="text-muted-foreground space-y-1">
-                                      {item.data.medications?.slice(0, 3).map((med: any, i: number) => (
-                                        <li key={i}>• {med.name} - {med.dosage}</li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )}
-                                
-                                {item.type === 'test' && item.data && (
-                                  <div className="mt-2 p-2 bg-green-50 rounded text-sm">
-                                    <p className="font-medium mb-1">Test Results:</p>
-                                    <p className="text-muted-foreground">
-                                      Visual Acuity: {item.data.visualAcuityRight || 'N/A'} / {item.data.visualAcuityLeft || 'N/A'}
-                                    </p>
-                                    {item.data.aiAnalysis && (
-                                      <p className="text-muted-foreground mt-1">
-                                        AI Analysis: {item.data.aiAnalysis ? 'Available' : 'Pending'}
-                                      </p>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            <div className="ml-4">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => {
-                                  if (item.type === 'appointment') {
-                                    router.push(`/dashboard/patient/appointments/${item.id}`);
-                                  } else if (item.type === 'test') {
-                                    router.push(`/dashboard/patient/tests/${item.id}`);
-                                  } else if (item.type === 'prescription') {
-                                    setActiveTab('prescriptions');
-                                  }
-                                }}
-                              >
-                                View Details
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground">No medical history yet</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           {/* Appointments Tab - Continue in next part due to length */}
           <TabsContent value="appointments" className="space-y-4">
@@ -717,15 +610,15 @@ export default function PatientDashboard() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Smart Appointment & Visit Management</CardTitle>
-                    <CardDescription>AI-suggested appointments, real-time queue tracking</CardDescription>
+                    <CardTitle className="text-foreground dark:text-white font-bold text-xl">Smart Appointment & Visit Management</CardTitle>
+                    <CardDescription className="text-foreground dark:text-white/90 font-medium">AI-suggested appointments, real-time queue tracking</CardDescription>
                   </div>
                   <div className="flex gap-2">
-                    <Button onClick={() => handleBookAppointment()}>
+                    <Button onClick={() => handleBookAppointment()} className="bg-primary text-white hover:bg-primary/90 font-semibold shadow-lg">
                       <Plus className="h-4 w-4 mr-2" />
                       Book Appointment
                     </Button>
-                    <Button variant="outline" onClick={() => handleBookAppointment('urgent')}>
+                    <Button variant="outline" onClick={() => handleBookAppointment('urgent')} className="border-2 border-primary text-primary bg-primary/10 hover:bg-primary/20 font-semibold dark:bg-primary/20 dark:text-primary dark:border-primary">
                       Urgent Appointment
                     </Button>
                   </div>
@@ -734,31 +627,31 @@ export default function PatientDashboard() {
               <CardContent>
                 {suggestedAppointments.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-medium mb-3">AI Suggested Appointments</h3>
+                    <h3 className="font-bold mb-3 text-foreground dark:text-white text-lg">AI Suggested Appointments</h3>
                     <div className="space-y-3">
                       {suggestedAppointments.slice(0, 5).map((suggestion: any, idx: number) => (
                         <Card key={idx} className="border-l-4 border-l-blue-500">
                           <CardContent className="p-4">
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <p className="font-medium">
+                                <p className="font-semibold text-foreground dark:text-white text-base">
                                   Dr. {suggestion.doctorName} - {suggestion.specialty}
                                 </p>
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-sm text-foreground dark:text-white/90 font-medium mt-1">
                                   Suggested Date: {new Date(suggestion.suggestedDate).toLocaleDateString()}
                                 </p>
                                 <div className="flex gap-2 mt-2">
                                   {suggestion.suggestedTimes.slice(0, 3).map((time: string, i: number) => (
-                                    <Badge key={i} variant="outline">
+                                    <Badge key={i} variant="outline" className="border-2 border-primary text-primary dark:text-primary dark:border-primary font-medium">
                                       {time}
                                     </Badge>
                                   ))}
                                 </div>
                                 <div className="flex items-center gap-2 mt-2">
-                                  <Badge className="bg-blue-100 text-blue-800">
+                                  <Badge className="bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100 font-semibold">
                                     Match Score: {suggestion.matchScore}%
                                   </Badge>
-                                  <Badge variant="outline">
+                                  <Badge variant="outline" className="border-2 border-primary text-primary dark:text-primary dark:border-primary font-medium">
                                     {suggestion.urgency === 'urgent' ? 'Urgent' : 'Normal'}
                                   </Badge>
                                 </div>
@@ -769,6 +662,7 @@ export default function PatientDashboard() {
                                   setBookingData(suggestion);
                                   setShowBookingModal(true);
                                 }}
+                                className="bg-primary text-white hover:bg-primary/90 font-semibold shadow-md"
                               >
                                 Book Now
                               </Button>
@@ -781,7 +675,7 @@ export default function PatientDashboard() {
                 )}
 
                 <div>
-                  <h3 className="font-medium mb-3">Your Appointments</h3>
+                  <h3 className="font-bold mb-3 text-foreground dark:text-white text-lg">Your Appointments</h3>
                   {unifiedJourney?.timeline?.filter((item: any) => item.type === 'appointment').length > 0 ? (
                     <div className="space-y-3">
                       {unifiedJourney.timeline
@@ -793,17 +687,17 @@ export default function PatientDashboard() {
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-2">
-                                    <Calendar className="h-4 w-4" />
-                                    <p className="font-medium">{item.title}</p>
+                                    <Calendar className="h-4 w-4 text-foreground dark:text-white" />
+                                    <p className="font-semibold text-foreground dark:text-white">{item.title}</p>
                                     <Badge className={getStatusColor(item.status)}>{item.status}</Badge>
                                   </div>
-                                  <p className="text-sm text-muted-foreground">
+                                  <p className="text-sm text-foreground dark:text-white/90 font-medium">
                                     {new Date(item.date).toLocaleDateString()} {item.data?.appointmentTime || ''}
                                   </p>
                                   {waitTime && waitTime.position && (
-                                    <div className="mt-2 p-2 bg-blue-50 rounded">
-                                      <p className="text-sm font-medium">Queue Position: {waitTime.position}</p>
-                                      <p className="text-sm text-muted-foreground">
+                                    <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200 dark:border-blue-700">
+                                      <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">Queue Position: {waitTime.position}</p>
+                                      <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
                                         Estimated Wait: {waitTime.estimatedWaitTime || `${waitTime.estimatedWaitMinutes || 0} minutes`}
                                       </p>
                                     </div>
@@ -814,6 +708,7 @@ export default function PatientDashboard() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => handleGetWaitTime(item.id)}
+                                    className="border-2 border-primary text-primary bg-primary/10 hover:bg-primary/20 font-semibold dark:bg-primary/20 dark:text-primary dark:border-primary"
                                   >
                                     <Clock className="h-4 w-4 mr-1" />
                                     Wait Time
@@ -822,6 +717,7 @@ export default function PatientDashboard() {
                                     variant="outline"
                                     size="sm"
                                     onClick={() => router.push(`/dashboard/patient/appointments/${item.id}`)}
+                                    className="border-2 border-primary text-primary bg-primary/10 hover:bg-primary/20 font-semibold dark:bg-primary/20 dark:text-primary dark:border-primary"
                                   >
                                     View
                                   </Button>
@@ -832,7 +728,7 @@ export default function PatientDashboard() {
                         ))}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-center py-8">No appointments scheduled</p>
+                    <p className="text-foreground dark:text-white font-medium text-center py-8">No appointments scheduled</p>
                   )}
                 </div>
               </CardContent>
@@ -1264,14 +1160,40 @@ export default function PatientDashboard() {
                         </CardHeader>
                         <CardContent>
                           <ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={chartData}>
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis dataKey="date" />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend />
-                              <Line type="monotone" dataKey="right" stroke="#8884d8" name="Right Eye" />
-                              <Line type="monotone" dataKey="left" stroke="#82ca9d" name="Left Eye" />
+                            <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                              <XAxis dataKey="date" stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                              <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                              <Tooltip 
+                                contentStyle={{ 
+                                  backgroundColor: 'hsl(175.9 55% 22%)', 
+                                  border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                                  color: 'hsl(168.4 83.8% 65%)',
+                                  borderRadius: '8px'
+                                }}
+                                cursor={{ stroke: 'hsl(168.4 83.8% 65%)', strokeWidth: 2 }}
+                              />
+                              <Legend wrapperStyle={{ color: 'hsl(168.4 83.8% 65%)' }} />
+                              <Line 
+                                type="monotone" 
+                                dataKey="right" 
+                                stroke="hsl(168.4 90% 75%)" 
+                                strokeWidth={3}
+                                name="Right Eye"
+                                dot={{ r: 5, fill: 'hsl(168.4 90% 75%)' }}
+                                activeDot={{ r: 8 }}
+                                animationDuration={1000}
+                              />
+                              <Line 
+                                type="monotone" 
+                                dataKey="left" 
+                                stroke="hsl(168.4 83.8% 65%)" 
+                                strokeWidth={3}
+                                name="Left Eye"
+                                dot={{ r: 5, fill: 'hsl(168.4 83.8% 65%)' }}
+                                activeDot={{ r: 8 }}
+                                animationDuration={1000}
+                              />
                             </LineChart>
                           </ResponsiveContainer>
                         </CardContent>
@@ -1392,45 +1314,6 @@ export default function PatientDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="monitoring" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Self-Monitoring & Home Tests</CardTitle>
-                <CardDescription>AI insights, symptom checker, home vision tests</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-base">Home Vision Test</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Perform basic vision or color tests at home using your mobile device
-                      </p>
-                      <Button variant="outline" onClick={handleStartHomeTest}>
-                        Start Home Test
-                      </Button>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-base">Symptom Checker</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Describe symptoms → AI suggests possible causes and directs to specialist
-                      </p>
-                      <Button variant="outline" onClick={handleCheckSymptoms}>
-                        Check Symptoms
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           <TabsContent value="settings" className="space-y-4">
             <Card>

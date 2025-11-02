@@ -4,56 +4,89 @@
 
 @layer base {
   :root {
-    /* Smart-Tech Theme */
-    /* Background: Light Gray */
-    --background: 220 14% 96%;
-    --foreground: 222.2 84% 4.9%;
-    /* Cards: White */
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    /* Icons: Blue */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 92%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 220 14% 94%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    /* Accent: Purple */
-    --accent: 262 83% 58%;
-    --accent-foreground: 0 0% 100%;
+    /* Default to dark theme - will be overridden by .dark class */
+    /* Dashboard Theme - Dark Teal Background */
+    /* Background: HSL(175.9, 60.8%, 19%) - Dark Teal/Cyan */
+    --background: 175.9 60.8% 19%;
+    /* Text and Lines: HSL(168.4, 83.8%, 65%) - Darker Mint Green/Cyan for visibility */
+    --foreground: 168.4 83.8% 65%;
+    /* Cards: Slightly lighter than background */
+    --card: 175.9 55% 22%;
+    --card-foreground: 168.4 83.8% 65%;
+    --popover: 175.9 55% 22%;
+    --popover-foreground: 168.4 83.8% 65%;
+    /* Primary: Darker Mint Green for buttons and accents */
+    --primary: 168.4 83.8% 65%;
+    --primary-foreground: 175.9 60.8% 19%;
+    --secondary: 175.9 50% 25%;
+    --secondary-foreground: 168.4 83.8% 65%;
+    --muted: 175.9 45% 28%;
+    --muted-foreground: 168.4 70% 60%;
+    /* Accent: Brighter mint green */
+    --accent: 168.4 90% 75%;
+    --accent-foreground: 175.9 60.8% 19%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 14% 88%;
-    --input: 220 14% 88%;
-    --ring: 217 91% 60%;
+    --border: 175.9 40% 30%;
+    --input: 175.9 40% 30%;
+    --ring: 168.4 83.8% 65%;
     --radius: 0.5rem;
   }
+  
+  /* Light theme root variables - applied when not dark */
+  html:not(.dark),
+  html[data-theme="light"] {
+    /* Light theme variables */
+    --background: 210 14% 96%;
+    --foreground: 210 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+    --primary: 142 65% 78%;
+    --primary-foreground: 142 40% 20%;
+    --secondary: 212 18% 90%;
+    --secondary-foreground: 210 20% 15%;
+    --muted: 212 18% 93%;
+    --muted-foreground: 210 15% 35%;
+    --accent: 142 70% 82%;
+    --accent-foreground: 142 40% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 212 18% 85%;
+    --input: 212 18% 85%;
+    --ring: 142 65% 78%;
+  }
 
-  /* Patient Portal Theme - Light Gray & Mint Green */
+  /* Patient Portal Theme - Same dark theme as other dashboards */
   .patient-portal,
   [data-portal="patient"],
   body.patient-portal {
-    /* Background: Light Gray (#F5F7FA) */
-    --background: 210 14% 96%;
-    /* Alternative Light Gray (#E0E6ED) for secondary backgrounds */
-    --secondary: 212 18% 90%;
-    --muted: 212 18% 93%;
-    /* Cards: White */
-    --card: 0 0% 100%;
-    /* Accent: Mint Green (#9AE6B4) */
-    --accent: 142 65% 78%;
-    --accent-foreground: 142 40% 20%;
-    /* Lighter Mint Green (#A2F2C2) for subtle accents */
-    /* Primary: Mint Green for icons and buttons */
-    --primary: 142 65% 78%;
-    --primary-foreground: 142 40% 20%;
-    /* Border: Light Gray */
-    --border: 212 18% 85%;
-    --input: 212 18% 85%;
-    /* Ring/Focus: Mint Green */
-    --ring: 142 65% 78%;
+    /* Background: HSL(175.9, 60.8%, 19%) - Dark Teal/Cyan */
+    --background: 175.9 60.8% 19%;
+    /* Text and Lines: HSL(168.4, 83.8%, 78.2%) - Darker for visibility */
+    --foreground: 168.4 83.8% 65%;
+    /* Cards: Slightly lighter than background */
+    --card: 175.9 55% 22%;
+    --card-foreground: 168.4 83.8% 65%;
+    --popover: 175.9 55% 22%;
+    --popover-foreground: 168.4 83.8% 65%;
+    /* Primary: Darker mint green for buttons and accents */
+    --primary: 168.4 83.8% 65%;
+    --primary-foreground: 175.9 60.8% 19%;
+    --secondary: 175.9 50% 25%;
+    --secondary-foreground: 168.4 83.8% 65%;
+    --muted: 175.9 45% 28%;
+    --muted-foreground: 168.4 70% 60%;
+    /* Accent: Brighter mint green */
+    --accent: 168.4 90% 75%;
+    --accent-foreground: 175.9 60.8% 19%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 175.9 40% 30%;
+    --input: 175.9 40% 30%;
+    /* Ring/Focus: Darker mint green */
+    --ring: 168.4 83.8% 65%;
   }
   
   /* Patient Portal specific styles */
@@ -97,31 +130,459 @@
     background-color: hsl(142 70% 82%);
   }
 
-  .dark {
-    /* Smart-Tech Dark Theme */
-    /* Background: Dark Gray */
-    --background: 222.2 47.4% 11.2%;
-    --foreground: 210 40% 98%;
-    /* Cards: Dark Gray (slightly lighter than background) */
-    --card: 217.2 32.6% 17.5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 217.2 32.6% 17.5%;
-    --popover-foreground: 210 40% 98%;
-    /* Icons: Bright Blue */
-    --primary: 217 91% 65%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    /* Accent: Bright Purple */
-    --accent: 262 83% 63%;
-    --accent-foreground: 0 0% 100%;
+  .dark,
+  [data-theme="dark"] {
+    /* Dashboard Dark Theme - Same as light mode for consistency */
+    /* Background: HSL(175.9, 60.8%, 19%) - Dark Teal/Cyan */
+    --background: 175.9 60.8% 19%;
+    /* Text and Lines: HSL(168.4, 83.8%, 65%) - Darker Mint Green/Cyan for visibility */
+    --foreground: 168.4 83.8% 65%;
+    /* Cards: Slightly lighter than background */
+    --card: 175.9 55% 22%;
+    --card-foreground: 168.4 83.8% 65%;
+    --popover: 175.9 55% 22%;
+    --popover-foreground: 168.4 83.8% 65%;
+    /* Primary: Darker Mint Green */
+    --primary: 168.4 83.8% 65%;
+    --primary-foreground: 175.9 60.8% 19%;
+    --secondary: 175.9 50% 25%;
+    --secondary-foreground: 168.4 83.8% 65%;
+    --muted: 175.9 45% 28%;
+    --muted-foreground: 168.4 70% 60%;
+    /* Accent: Brighter mint green */
+    --accent: 168.4 90% 75%;
+    --accent-foreground: 175.9 60.8% 19%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 25%;
-    --input: 217.2 32.6% 25%;
-    --ring: 217 91% 65%;
+    --destructive-foreground: 168.4 83.8% 65%;
+    --border: 175.9 40% 30%;
+    --input: 175.9 40% 30%;
+    --ring: 168.4 83.8% 65%;
+  }
+  
+  /* Light theme for auto mode */
+  [data-theme="light"]:not(.dark) {
+    /* Light theme - using lighter colors */
+    --background: 210 14% 96%;
+    --foreground: 210 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+    --primary: 142 65% 78%;
+    --primary-foreground: 142 40% 20%;
+    --secondary: 212 18% 90%;
+    --secondary-foreground: 210 20% 15%;
+    --muted: 212 18% 93%;
+    --muted-foreground: 210 15% 35%;
+    --accent: 142 70% 82%;
+    --accent-foreground: 142 40% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 212 18% 85%;
+    --input: 212 18% 85%;
+    --ring: 142 65% 78%;
+  }
+  
+  /* Dashboard Theme for all dashboards - Dark theme only when .dark class is present */
+  .dark .dashboard-theme,
+  .dark body.dashboard-theme,
+  [data-theme="dark"] .dashboard-theme,
+  [data-theme="dark"] body.dashboard-theme {
+    --background: 175.9 60.8% 19%;
+    --foreground: 168.4 83.8% 65%;
+    --card: 175.9 55% 22%;
+    --card-foreground: 168.4 83.8% 65%;
+    --primary: 168.4 83.8% 65%;
+    --primary-foreground: 175.9 60.8% 19%;
+    --border: 175.9 40% 30%;
+    --accent: 168.4 90% 75%;
+  }
+  
+  /* Light theme dashboards */
+  :not(.dark) .dashboard-theme,
+  :not(.dark) body.dashboard-theme,
+  [data-theme="light"] .dashboard-theme,
+  [data-theme="light"] body.dashboard-theme {
+    --background: 210 14% 96%;
+    --foreground: 210 20% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+    --primary: 142 65% 78%;
+    --primary-foreground: 142 40% 20%;
+    --border: 212 18% 85%;
+    --accent: 142 70% 82%;
+  }
+  
+  /* Apply to all dashboard pages - Dark theme */
+  .dark [data-dashboard],
+  .dark [data-dashboard] .min-h-screen,
+  .dark [data-dashboard] body,
+  [data-theme="dark"] [data-dashboard],
+  [data-theme="dark"] [data-dashboard] .min-h-screen,
+  [data-theme="dark"] [data-dashboard] body {
+    background-color: hsl(175.9 60.8% 19%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
+  }
+  
+  /* Apply to all dashboard pages - Light theme */
+  :not(.dark) [data-dashboard],
+  :not(.dark) [data-dashboard] .min-h-screen,
+  :not(.dark) [data-dashboard] body,
+  [data-theme="light"] [data-dashboard],
+  [data-theme="light"] [data-dashboard] .min-h-screen,
+  [data-theme="light"] [data-dashboard] body {
+    background-color: hsl(210 14% 96%) !important;
+    color: hsl(210 20% 15%) !important;
+  }
+  
+  /* Dashboard-specific background override - Dark */
+  .dark .dashboard-theme,
+  .dark body.dashboard-theme,
+  .dark .dashboard-theme .min-h-screen,
+  [data-theme="dark"] .dashboard-theme,
+  [data-theme="dark"] body.dashboard-theme,
+  [data-theme="dark"] .dashboard-theme .min-h-screen {
+    background-color: hsl(175.9 60.8% 19%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
+  }
+  
+  /* Dashboard-specific background override - Light */
+  :not(.dark) .dashboard-theme,
+  :not(.dark) body.dashboard-theme,
+  :not(.dark) .dashboard-theme .min-h-screen,
+  [data-theme="light"] .dashboard-theme,
+  [data-theme="light"] body.dashboard-theme,
+  [data-theme="light"] .dashboard-theme .min-h-screen {
+    background-color: hsl(210 14% 96%) !important;
+    color: hsl(210 20% 15%) !important;
+  }
+  
+  /* All text should be visible - Dark theme */
+  .dark [data-dashboard] p,
+  .dark [data-dashboard] span,
+  .dark [data-dashboard] div,
+  .dark [data-dashboard] h1,
+  .dark [data-dashboard] h2,
+  .dark [data-dashboard] h3,
+  .dark [data-dashboard] h4,
+  .dark [data-dashboard] h5,
+  .dark [data-dashboard] h6,
+  .dark [data-dashboard] label,
+  .dark [data-dashboard] td,
+  .dark [data-dashboard] th,
+  [data-theme="dark"] [data-dashboard] p,
+  [data-theme="dark"] [data-dashboard] span,
+  [data-theme="dark"] [data-dashboard] div,
+  [data-theme="dark"] [data-dashboard] h1,
+  [data-theme="dark"] [data-dashboard] h2,
+  [data-theme="dark"] [data-dashboard] h3,
+  [data-theme="dark"] [data-dashboard] h4,
+  [data-theme="dark"] [data-dashboard] h5,
+  [data-theme="dark"] [data-dashboard] h6,
+  [data-theme="dark"] [data-dashboard] label,
+  [data-theme="dark"] [data-dashboard] td,
+  [data-theme="dark"] [data-dashboard] th {
+    color: hsl(168.4 83.8% 65%) !important;
+  }
+  
+  /* All text should be visible - Light theme */
+  :not(.dark) [data-dashboard] p,
+  :not(.dark) [data-dashboard] span,
+  :not(.dark) [data-dashboard] div,
+  :not(.dark) [data-dashboard] h1,
+  :not(.dark) [data-dashboard] h2,
+  :not(.dark) [data-dashboard] h3,
+  :not(.dark) [data-dashboard] h4,
+  :not(.dark) [data-dashboard] h5,
+  :not(.dark) [data-dashboard] h6,
+  :not(.dark) [data-dashboard] label,
+  :not(.dark) [data-dashboard] td,
+  :not(.dark) [data-dashboard] th,
+  [data-theme="light"] [data-dashboard] p,
+  [data-theme="light"] [data-dashboard] span,
+  [data-theme="light"] [data-dashboard] div,
+  [data-theme="light"] [data-dashboard] h1,
+  [data-theme="light"] [data-dashboard] h2,
+  [data-theme="light"] [data-dashboard] h3,
+  [data-theme="light"] [data-dashboard] h4,
+  [data-theme="light"] [data-dashboard] h5,
+  [data-theme="light"] [data-dashboard] h6,
+  [data-theme="light"] [data-dashboard] label,
+  [data-theme="light"] [data-dashboard] td,
+  [data-theme="light"] [data-dashboard] th {
+    color: hsl(210 20% 15%) !important;
+  }
+  
+  /* Cards - Dark theme */
+  .dark [class*="Card"],
+  .dark [data-dashboard] .card,
+  .dark [data-dashboard] [class*="bg-card"],
+  .dark .patient-portal [class*="Card"],
+  .dark .patient-portal .card,
+  .dark .patient-portal [class*="bg-card"],
+  [data-theme="dark"] [class*="Card"],
+  [data-theme="dark"] [data-dashboard] .card,
+  [data-theme="dark"] [data-dashboard] [class*="bg-card"],
+  [data-theme="dark"] .patient-portal [class*="Card"],
+  [data-theme="dark"] .patient-portal .card,
+  [data-theme="dark"] .patient-portal [class*="bg-card"] {
+    background-color: hsl(175.9 55% 22%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
+    border-color: hsl(175.9 40% 30%) !important;
+  }
+  
+  /* Cards - Light theme */
+  :not(.dark) [class*="Card"],
+  :not(.dark) [data-dashboard] .card,
+  :not(.dark) [data-dashboard] [class*="bg-card"],
+  :not(.dark) .patient-portal [class*="Card"],
+  :not(.dark) .patient-portal .card,
+  :not(.dark) .patient-portal [class*="bg-card"],
+  [data-theme="light"] [class*="Card"],
+  [data-theme="light"] [data-dashboard] .card,
+  [data-theme="light"] [data-dashboard] [class*="bg-card"],
+  [data-theme="light"] .patient-portal [class*="Card"],
+  [data-theme="light"] .patient-portal .card,
+  [data-theme="light"] .patient-portal [class*="bg-card"] {
+    background-color: hsl(0 0% 100%) !important;
+    color: hsl(210 20% 15%) !important;
+    border-color: hsl(212 18% 85%) !important;
+  }
+  
+  /* Borders and lines - darker for visibility */
+  hr, [class*="border"], .border {
+    border-color: hsl(168.4 83.8% 65% / 40%) !important;
+  }
+  
+  /* Buttons - Enhanced animations (fallback if component styles don't apply) */
+  button:not([disabled]) {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+  }
+  
+  button:not([disabled]):hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(168.4, 83.8%, 65%, 0.3);
+  }
+  
+  button:not([disabled]):active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(168.4, 83.8%, 65%, 0.2);
+  }
+  
+  /* Interactive chart styles */
+  .recharts-wrapper {
+    filter: drop-shadow(0 4px 6px rgba(168.4, 83.8%, 65%, 0.2));
+  }
+  
+  .recharts-cartesian-grid line {
+    stroke: hsl(168.4 83.8% 65% / 30%) !important;
+  }
+  
+  .recharts-text {
+    fill: hsl(168.4 83.8% 65%) !important;
+    font-weight: 500;
+  }
+  
+  .recharts-tooltip-wrapper {
+    background-color: hsl(175.9 55% 22%) !important;
+    border-color: hsl(168.4 83.8% 65% / 40%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .recharts-active-dot {
+    r: 6;
+    fill: hsl(168.4 90% 75%);
+    stroke: hsl(168.4 83.8% 65%);
+    stroke-width: 2;
+    filter: drop-shadow(0 2px 4px rgba(168.4, 90%, 75%, 0.5));
+  }
+  
+  .recharts-bar {
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .recharts-bar:hover {
+    opacity: 0.8;
+  }
+  
+  .recharts-line {
+    stroke-width: 3;
+    animation: drawLine 1s ease-in-out;
+  }
+  
+  @keyframes drawLine {
+    from {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .recharts-sector {
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .recharts-sector:hover {
+    opacity: 0.9;
+    transform-origin: center;
+  }
+  
+  /* Enhanced button interactivity with animations */
+  button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+  }
+  
+  button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(168.4, 83.8%, 65%, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  button:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(168.4, 83.8%, 65%, 0.3);
+  }
+  
+  button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(168.4, 83.8%, 65%, 0.2);
+  }
+  
+  button > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Card hover effects with animations */
+  .card,
+  [class*="Card"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .card:hover,
+  [class*="Card"]:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 12px 32px rgba(168.4, 83.8%, 65%, 0.25);
+  }
+  
+  /* Card click animation */
+  .card:active,
+  [class*="Card"]:active {
+    transform: translateY(-2px) scale(0.99);
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  /* Animated cards on load */
+  .card,
+  [class*="Card"] {
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  /* Stagger animation for multiple cards */
+  .card:nth-child(1),
+  [class*="Card"]:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  .card:nth-child(2),
+  [class*="Card"]:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .card:nth-child(3),
+  [class*="Card"]:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .card:nth-child(4),
+  [class*="Card"]:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  
+  /* Interactive hover glow for cards */
+  .card:hover,
+  [class*="Card"]:hover {
+    position: relative;
+  }
+  
+  .card:hover::before,
+  [class*="Card"]:hover::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: inherit;
+    background: linear-gradient(45deg, rgba(168.4, 83.8%, 65%, 0.1), rgba(168.4, 90%, 75%, 0.1));
+    z-index: -1;
+    opacity: 0;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  /* Input focus effects */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: hsl(168.4 83.8% 65% / 50%);
+    box-shadow: 0 0 0 3px hsl(168.4 83.8% 65% / 20%);
   }
 }
 
@@ -145,45 +606,48 @@
     color: hsl(217 91% 60%);
   }
   
-  /* Patient Portal Icons: Mint Green */
+  /* Patient Portal Icons: Darker Mint Green */
   .patient-portal svg[class*="lucide"],
   .patient-portal svg[class*="icon"],
   [data-portal="patient"] svg[class*="lucide"],
   [data-portal="patient"] svg[class*="icon"],
   body.patient-portal svg[class*="lucide"],
   body.patient-portal svg[class*="icon"] {
-    color: hsl(142 65% 78%);
+    color: hsl(168.4 83.8% 65%);
   }
   
-  /* Patient Portal Background Colors */
+  /* Patient Portal Background Colors - Dark theme */
   .patient-portal .bg-background,
   [data-portal="patient"] .bg-background,
   body.patient-portal .bg-background {
-    background-color: hsl(210 14% 96%) !important;
+    background-color: hsl(175.9 60.8% 19%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
   }
   
   .patient-portal .bg-secondary,
   [data-portal="patient"] .bg-secondary,
   body.patient-portal .bg-secondary {
-    background-color: hsl(212 18% 90%) !important;
+    background-color: hsl(175.9 50% 25%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
   }
   
   .patient-portal .bg-muted,
   [data-portal="patient"] .bg-muted,
   body.patient-portal .bg-muted {
-    background-color: hsl(212 18% 93%) !important;
+    background-color: hsl(175.9 45% 28%) !important;
+    color: hsl(168.4 83.8% 65%) !important;
   }
   
   /* Login Page Theme - Navy Blue & Aqua/Teal */
   .login-page,
   [data-page="login"],
   body.login-page {
-    /* Background: Navy Blue (#0A2540) */
-    --login-bg: 210 73% 14%;
-    /* Alternative Navy Blue (#1C2C54) */
-    --login-bg-alt: 217 50% 22%;
+    /* Background: Navy Blue - New color */
+    --login-bg: 178.6 84.3% 10%;
+    /* Alternative Navy Blue - Slightly lighter */
+    --login-bg-alt: 178.6 84.3% 12%;
     /* Cards: Dark Navy */
-    --login-card: 217 50% 22%;
+    --login-card: 178.6 84.3% 12%;
     /* Accent: Aqua/Teal (#00C4CC) */
     --login-accent: 182 100% 40%;
     /* Alternative Aqua/Teal (#2BB2A1) */
@@ -197,13 +661,13 @@
   .login-page .bg-background,
   [data-page="login"] .bg-background,
   body.login-page .bg-background {
-    background: linear-gradient(135deg, hsl(210 73% 14%) 0%, hsl(217 50% 22%) 100%);
+    background: linear-gradient(135deg, hsl(178.6 84.3% 10%) 0%, hsl(178.6 84.3% 12%) 100%);
   }
   
   .login-page .bg-card,
   [data-page="login"] .bg-card,
   body.login-page .bg-card {
-    background-color: hsl(217 50% 25%) !important;
+    background-color: hsl(178.6 84.3% 12%) !important;
     border-color: hsl(182 100% 40% / 30%) !important;
   }
   

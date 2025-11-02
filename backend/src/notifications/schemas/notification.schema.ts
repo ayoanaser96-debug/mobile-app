@@ -10,6 +10,7 @@ export enum NotificationType {
   CASE_ASSIGNED = 'case_assigned',
   CASE_DELEGATED = 'case_delegated',
   PRESCRIPTION_READY = 'prescription_ready',
+  JOURNEY = 'journey',
 }
 
 export enum NotificationPriority {

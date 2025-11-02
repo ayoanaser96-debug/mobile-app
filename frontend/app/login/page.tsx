@@ -215,7 +215,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center login-page bg-background p-4" data-page="login">
+    <div className="min-h-screen flex items-center justify-center login-page bg-background p-4 dashboard-theme" data-page="login" data-dashboard="true">
       <div className="w-full max-w-2xl">
         {/* Header Section */}
         <div className="text-center mb-8 space-y-3">
@@ -244,7 +244,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <Card className="w-full shadow-xl border-2 border-primary/30">
+        <Card className="w-full shadow-xl border-2 border-primary/30" style={{ backgroundColor: 'hsl(178.6, 84.3%, 10%)' }}>
           <CardHeader className="space-y-4 pb-6">
             <div className="flex items-center justify-center gap-2">
               <Eye className="h-5 w-5 text-primary" />

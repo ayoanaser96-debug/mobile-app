@@ -18,6 +18,7 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { CasesModule } from './cases/cases.module';
 import { AuditModule } from './audit/audit.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { BillingModule } from './billing/billing.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
     CasesModule,
     AuditModule,
     AnalyticsModule,
+    BillingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

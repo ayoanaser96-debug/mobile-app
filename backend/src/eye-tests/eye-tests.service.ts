@@ -1,12 +1,15 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef, Optional } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EyeTest, EyeTestDocument, TestStatus } from './schemas/eye-test.schema';
+import { PatientJourneyService } from '../patients/patient-journey.service';
 
 @Injectable()
 export class EyeTestsService {
   constructor(
     @InjectModel(EyeTest.name) private eyeTestModel: Model<EyeTestDocument>,
+    @Optional() @Inject(forwardRef(() => PatientJourneyService))
+    private patientJourneyService?: PatientJourneyService,
   ) {}
 
   async create(createDto: any) {
@@ -95,11 +98,28 @@ export class EyeTestsService {
   }
 
   async addAnalystNotes(id: string, notes: string, analystId: string) {
-    return this.eyeTestModel.findByIdAndUpdate(
+    const updated = await this.eyeTestModel.findByIdAndUpdate(
       id,
       { analystNotes: notes, analystId, status: TestStatus.DOCTOR_REVIEW },
       { new: true },
-    );
+    ).populate('patientId');
+    
+    // Update patient journey - mark analyst step as complete
+    if (this.patientJourneyService && updated?.patientId) {
+      try {
+        const patientId = typeof updated.patientId === 'string' 
+          ? updated.patientId 
+          : (updated.patientId as any)?._id?.toString() || (updated.patientId as any)?.id?.toString();
+        if (patientId) {
+          await this.patientJourneyService.markAnalystComplete(patientId, analystId);
+        }
+      } catch (error) {
+        // Journey might not exist, that's okay
+        console.log('Journey update skipped:', error.message);
+      }
+    }
+    
+    return updated;
   }
 
   async doctorReview(id: string, review: any) {
@@ -112,7 +132,22 @@ export class EyeTestsService {
         status: review.approved ? TestStatus.COMPLETED : TestStatus.DOCTOR_REVIEW,
       },
       { new: true },
-    );
+    ).populate('patientId');
+
+    // Update patient journey - mark doctor step as complete
+    if (this.patientJourneyService && updated?.patientId && review.approved) {
+      try {
+        const patientId = typeof updated.patientId === 'string' 
+          ? updated.patientId 
+          : (updated.patientId as any)?._id?.toString() || (updated.patientId as any)?.id?.toString();
+        if (patientId) {
+          await this.patientJourneyService.markDoctorComplete(patientId, review.doctorId);
+        }
+      } catch (error) {
+        // Journey might not exist, that's okay
+        console.log('Journey update skipped:', error.message);
+      }
+    }
 
     // Auto-create case when doctor reviews (if case doesn't exist)
     // This will be handled in the doctor review endpoint

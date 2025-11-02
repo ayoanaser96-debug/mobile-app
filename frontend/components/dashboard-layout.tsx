@@ -39,7 +39,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const isPatientPortal = user?.role === 'patient';
   
   return (
-    <div className={`min-h-screen bg-background ${isPatientPortal ? 'patient-portal' : ''}`} data-portal={isPatientPortal ? 'patient' : undefined}>
+    <div className={`min-h-screen bg-background dashboard-theme ${isPatientPortal ? 'patient-portal' : ''}`} data-portal={isPatientPortal ? 'patient' : undefined} data-dashboard="true">
       {/* Header */}
       <header className="bg-card border-b border-border shadow-sm">
         <div className="flex items-center justify-between px-4 py-4">

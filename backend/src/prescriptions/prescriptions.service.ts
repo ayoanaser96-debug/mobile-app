@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef, Optional } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Prescription, PrescriptionDocument } from './schemas/prescription.schema';
 import { PrescriptionTemplate, PrescriptionTemplateDocument } from './schemas/prescription-template.schema';
+import { PatientJourneyService } from '../patients/patient-journey.service';
 
 @Injectable()
 export class PrescriptionsService {
@@ -11,6 +12,8 @@ export class PrescriptionsService {
     private prescriptionModel: Model<PrescriptionDocument>,
     @InjectModel(PrescriptionTemplate.name)
     private templateModel: Model<PrescriptionTemplateDocument>,
+    @Optional() @Inject(forwardRef(() => PatientJourneyService))
+    private patientJourneyService?: PatientJourneyService,
   ) {}
 
   async create(createDto: any) {
@@ -59,11 +62,28 @@ export class PrescriptionsService {
   }
 
   async fillPrescription(id: string, notes?: string) {
-    return this.prescriptionModel.findByIdAndUpdate(
+    const updated = await this.prescriptionModel.findByIdAndUpdate(
       id,
       { status: 'filled', pharmacyNotes: notes },
       { new: true },
-    );
+    ).populate('patientId');
+    
+    // Update patient journey - mark pharmacy step as complete
+    if (this.patientJourneyService && updated?.patientId) {
+      try {
+        const patientId = typeof updated.patientId === 'string' 
+          ? updated.patientId 
+          : (updated.patientId as any)?._id?.toString() || (updated.patientId as any)?.id?.toString();
+        if (patientId) {
+          await this.patientJourneyService.markPharmacyComplete(patientId, undefined, id);
+        }
+      } catch (error) {
+        // Journey might not exist, that's okay
+        console.log('Journey update skipped:', error.message);
+      }
+    }
+    
+    return updated;
   }
 
   async getAISuggestions(diagnosis: string, patientHistory?: any) {

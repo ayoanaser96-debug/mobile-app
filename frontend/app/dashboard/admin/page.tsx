@@ -722,12 +722,29 @@ export default function AdminDashboard() {
                 <CardContent>
                   {appointmentByDay.length > 0 ? (
                     <ResponsiveContainer width="100%" height={250}>
-                      <LineChart data={appointmentByDay}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="count" stroke="#8884d8" name="Appointments" />
+                      <LineChart data={appointmentByDay} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                        <XAxis dataKey="date" stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                          cursor={{ stroke: 'hsl(168.4 83.8% 65%)', strokeWidth: 2 }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="count" 
+                          stroke="hsl(168.4 90% 75%)" 
+                          strokeWidth={3}
+                          name="Appointments"
+                          dot={{ r: 5, fill: 'hsl(168.4 90% 75%)' }}
+                          activeDot={{ r: 8 }}
+                          animationDuration={1000}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
@@ -811,13 +828,27 @@ export default function AdminDashboard() {
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={billingByDay}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="revenue" fill="#10b981" name="Revenue ($)" />
+                    <BarChart data={billingByDay} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                      <XAxis dataKey="date" stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                      <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(175.9 55% 22%)', 
+                          border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                          color: 'hsl(168.4 83.8% 65%)',
+                          borderRadius: '8px'
+                        }}
+                        cursor={{ fill: 'hsl(168.4 83.8% 65% / 10%)' }}
+                      />
+                      <Legend wrapperStyle={{ color: 'hsl(168.4 83.8% 65%)' }} />
+                      <Bar 
+                        dataKey="revenue" 
+                        fill="hsl(168.4 90% 75%)" 
+                        name="Revenue ($)"
+                        radius={[8, 8, 0, 0]}
+                        animationDuration={1000}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -843,14 +874,26 @@ export default function AdminDashboard() {
                           labelLine={false}
                           label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                           outerRadius={80}
-                          fill="#8884d8"
+                          fill="hsl(168.4 83.8% 78.2%)"
                           dataKey="count"
+                          animationBegin={0}
+                          animationDuration={1000}
                         >
                           {diseaseDistribution.map((entry: any, index: number) => (
-                            <Cell key={`cell-${index}`} fill={['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#3b82f6'][index % 5]} />
+                            <Cell 
+                              key={`cell-${index}`} 
+                              fill={`hsl(${168.4 + index * 10} 83.8% ${78.2 + index * 2}%)`}
+                            />
                           ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
@@ -866,12 +909,29 @@ export default function AdminDashboard() {
                 <CardContent>
                   {patientGrowth.length > 0 ? (
                     <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={patientGrowth}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line type="monotone" dataKey="count" stroke="#8884d8" name="New Patients" />
+                      <LineChart data={patientGrowth} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(168.4 83.8% 65% / 30%)" />
+                        <XAxis dataKey="month" stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <YAxis stroke="hsl(168.4 83.8% 65%)" tick={{ fill: 'hsl(168.4 83.8% 65%)' }} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(175.9 55% 22%)', 
+                            border: '1px solid hsl(168.4 83.8% 65% / 40%)',
+                            color: 'hsl(168.4 83.8% 65%)',
+                            borderRadius: '8px'
+                          }}
+                          cursor={{ stroke: 'hsl(168.4 83.8% 65%)', strokeWidth: 2 }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="count" 
+                          stroke="hsl(168.4 90% 75%)" 
+                          strokeWidth={3}
+                          name="New Patients"
+                          dot={{ r: 5, fill: 'hsl(168.4 90% 75%)' }}
+                          activeDot={{ r: 8 }}
+                          animationDuration={1000}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
