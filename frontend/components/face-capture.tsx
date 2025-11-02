@@ -24,11 +24,26 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
   const { toast } = useToast();
 
   useEffect(() => {
-    startCamera();
+    // Don't auto-start camera, wait for user interaction
     return () => {
       stopCamera();
     };
   }, []);
+
+  useEffect(() => {
+    // Ensure video plays when stream is set
+    if (videoRef.current && stream) {
+      const video = videoRef.current;
+      const playPromise = video.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error('Video play failed:', error);
+          setError('Failed to play video stream. Please try again.');
+        });
+      }
+    }
+  }, [stream]);
 
   const startCamera = async () => {
     try {
@@ -43,26 +58,9 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         return;
       }
 
-      // Check permissions first (if supported)
-      if (navigator.permissions) {
-        try {
-          const permissionStatus = await navigator.permissions.query({ name: 'camera' as PermissionName });
-          if (permissionStatus.state === 'denied') {
-            setError('Camera access denied. Please enable camera permissions in your browser settings and refresh the page.');
-            toast({
-              title: 'Camera Permission Denied',
-              description: 'Please enable camera permissions in your browser settings.',
-              variant: 'destructive',
-            });
-            return;
-          }
-        } catch (permError) {
-          // Permissions API not supported or failed, continue anyway
-          console.log('Permissions API not available, proceeding...');
-        }
-      }
-
-      // Request camera access
+      console.log('Requesting camera access...');
+      
+      // Request camera access directly (don't check permissions first to show the prompt)
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 640 },
@@ -71,12 +69,20 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         },
       });
       
+      console.log('Camera access granted, setting up video element...');
+      
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
         setStream(mediaStream);
         setError(''); // Clear any previous errors
+        console.log('Camera stream set successfully');
+      } else {
+        console.error('Video ref is null');
+        mediaStream.getTracks().forEach(track => track.stop());
+        setError('Camera initialization error. Please refresh and try again.');
       }
     } catch (err: any) {
+      console.error('Camera access error:', err);
       let errorMessage = 'Unable to access camera. ';
       
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
@@ -104,6 +110,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         errorMessage = 'Camera constraints not satisfied. Trying with default settings...';
         // Try again with less specific constraints
         try {
+          console.log('Retrying with simple video constraints...');
           const mediaStream = await navigator.mediaDevices.getUserMedia({
             video: true, // Just request any video stream
           });
@@ -111,9 +118,11 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
             videoRef.current.srcObject = mediaStream;
             setStream(mediaStream);
             setError('');
+            console.log('Camera fallback successful');
             return;
           }
         } catch (retryError: any) {
+          console.error('Fallback also failed:', retryError);
           errorMessage = 'Unable to access camera. Please check your camera settings.';
         }
       } else {
@@ -191,6 +200,22 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        {!stream && !captured && !error && (
+          <div className="text-center py-8">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+              <Camera className="h-10 w-10 text-primary" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2">Camera Access Required</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              Click the button below to start your camera and {mode === 'register' ? 'register' : 'recognize'} your face
+            </p>
+            <Button onClick={startCamera} size="lg" className="btn-modern glow-primary">
+              <Camera className="h-5 w-5 mr-2" />
+              Start Camera
+            </Button>
+          </div>
+        )}
+
         {error && (
           <>
             <CameraPermissionHelper
@@ -205,20 +230,23 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
           </>
         )}
 
-        {!captured ? (
+        {stream && !captured && (
           <div className="relative">
             <video
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-full rounded-lg border-2 border-dashed"
+              muted
+              className="w-full rounded-lg border-2 border-dashed bg-gray-900"
               style={{ maxHeight: '480px' }}
             />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="border-4 border-white rounded-full w-48 h-48 opacity-50" />
             </div>
           </div>
-        ) : (
+        )}
+
+        {captured && (
           <div className="relative">
             <img
               src={imageData}
@@ -235,19 +263,24 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         <canvas ref={canvasRef} className="hidden" />
 
         <div className="flex gap-2">
-          {!captured ? (
+          {stream && !captured && (
             <>
-              <Button onClick={capturePhoto} className="flex-1">
+              <Button onClick={capturePhoto} className="flex-1 btn-modern">
                 <Camera className="h-4 w-4 mr-2" />
                 Capture Photo
               </Button>
-              <Button variant="outline" onClick={cancel}>
+              <Button variant="outline" onClick={() => {
+                stopCamera();
+                setError('');
+              }}>
                 Cancel
               </Button>
             </>
-          ) : (
+          )}
+
+          {captured && (
             <>
-              <Button onClick={confirm} className="flex-1">
+              <Button onClick={confirm} className="flex-1 btn-modern glow-primary">
                 <CheckCircle className="h-4 w-4 mr-2" />
                 Confirm
               </Button>
@@ -263,41 +296,13 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
           )}
         </div>
 
-        <div className="text-xs text-muted-foreground space-y-1">
-          <p>• Ensure good lighting</p>
-          <p>• Face the camera directly</p>
-          <p>• Remove glasses if possible</p>
-          <p>• Keep a neutral expression</p>
-        </div>
-
-        {error && (
-          <Card className="border-red-200 bg-red-50">
-            <CardContent className="p-4">
-              <div className="space-y-3">
-                <p className="text-sm font-medium text-red-800">{error}</p>
-                <div className="text-xs text-red-700 space-y-2">
-                  <p className="font-medium">How to enable camera permissions:</p>
-                  <ul className="list-disc list-inside space-y-1 ml-2">
-                    <li><strong>Chrome/Edge:</strong> Click the camera icon in the address bar → Allow</li>
-                    <li><strong>Firefox:</strong> Click the camera icon in the address bar → Allow</li>
-                    <li><strong>Safari:</strong> Safari → Settings → Websites → Camera → Allow</li>
-                    <li><strong>Mobile:</strong> Settings → App Permissions → Camera → Allow</li>
-                  </ul>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-2 w-full border-red-300 text-red-700 hover:bg-red-100"
-                    onClick={() => {
-                      setError('');
-                      startCamera();
-                    }}
-                  >
-                    Try Again
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {(stream || captured) && (
+          <div className="text-xs text-muted-foreground space-y-1">
+            <p>• Ensure good lighting</p>
+            <p>• Face the camera directly</p>
+            <p>• Remove glasses if possible</p>
+            <p>• Keep a neutral expression</p>
+          </div>
         )}
       </CardContent>
     </Card>

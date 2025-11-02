@@ -43,7 +43,8 @@ export default function FaceCheckInPage() {
 
         // Auto-login after recognition
         setTimeout(() => {
-          // Store user data and token (you would get token from backend)
+          // Store user data and token from backend
+          localStorage.setItem('token', response.data.token || '');
           localStorage.setItem('user', JSON.stringify(response.data.user));
           router.push(`/dashboard/${response.data.user.role}`);
         }, 2000);

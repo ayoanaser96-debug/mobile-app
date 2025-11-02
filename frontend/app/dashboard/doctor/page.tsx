@@ -176,31 +176,35 @@ export default function DoctorDashboard() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between animate-fade-in-up">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Users className="h-8 w-8 text-primary" />
-              Doctor Dashboard
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                <Users className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Doctor Dashboard
+              </h1>
+            </div>
+            <p className="text-muted-foreground">
               Smart case management with AI-assisted diagnosis and treatment
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
-              className="relative"
+              className="relative btn-modern"
               onClick={() => setShowNotifications(!showNotifications)}
             >
               <Bell className="h-4 w-4 mr-2" />
               Notifications
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse-modern">
                   {unreadCount}
                 </span>
               )}
             </Button>
-            <Button onClick={() => setActiveTab('analytics')}>
+            <Button onClick={() => setActiveTab('analytics')} className="btn-modern glow-primary">
               <BarChart3 className="h-4 w-4 mr-2" />
               Analytics
             </Button>
@@ -209,51 +213,59 @@ export default function DoctorDashboard() {
 
         {/* Quick Stats */}
         <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">My Cases</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <FileText className="h-4 w-4 text-primary" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{cases.length}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{cases.length}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {cases.filter((c: any) => c.priority === 'urgent' || c.priority === 'high').length} urgent
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Appointments</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-accent/10">
+                <Calendar className="h-4 w-4 text-accent" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{appointments.length}</div>
-              <p className="text-xs text-muted-foreground">Scheduled</p>
+              <div className="text-3xl font-bold">{appointments.length}</div>
+              <p className="text-xs text-muted-foreground mt-1">Scheduled</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-red-500/50 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Unread Alerts</CardTitle>
-              <AlertCircle className="h-4 w-4 text-red-500" />
+              <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30">
+                <AlertCircle className="h-4 w-4 text-red-500" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">{unreadCount}</div>
-              <p className="text-xs text-muted-foreground">Requires attention</p>
+              <div className="text-3xl font-bold text-red-600">{unreadCount}</div>
+              <p className="text-xs text-muted-foreground mt-1">Requires attention</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">AI Agreement</CardTitle>
-              <Brain className="h-4 w-4 text-primary" />
+              <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30">
+                <Brain className="h-4 w-4 text-purple-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {analytics?.aiAgreementRate ? `${analytics.aiAgreementRate.toFixed(1)}%` : 'N/A'}
               </div>
-              <p className="text-xs text-muted-foreground">Diagnosis accuracy</p>
+              <p className="text-xs text-muted-foreground mt-1">Diagnosis accuracy</p>
             </CardContent>
           </Card>
         </div>

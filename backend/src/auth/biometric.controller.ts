@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AuthService } from './auth.service';
 import { FaceRecognitionService } from './face-recognition.service';
 import { DocumentScannerService } from './document-scanner.service';
 import { DocumentType } from './schemas/user-document.schema';
@@ -20,6 +21,7 @@ export class BiometricController {
   constructor(
     private readonly faceRecognitionService: FaceRecognitionService,
     private readonly documentScannerService: DocumentScannerService,
+    private readonly authService: AuthService,
   ) {}
 
   // Face Recognition Endpoints
@@ -48,10 +50,14 @@ export class BiometricController {
   async checkInWithFace(@Body() body: { faceImage: string }) {
     const match = await this.faceRecognitionService.recognizeFace(body.faceImage);
     
-    if (match) {
+    if (match && match.user) {
+      // Generate login token using AuthService
+      const loginResult = await this.authService.login(match.user);
+      
       return {
         success: true,
-        user: match.user,
+        user: loginResult.user,
+        token: loginResult.access_token,
         confidence: match.confidence,
         message: 'Face recognized successfully',
       };

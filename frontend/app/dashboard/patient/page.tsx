@@ -391,18 +391,22 @@ export default function PatientDashboard() {
     <DashboardLayout>
       <div className="space-y-6 patient-portal" data-portal="patient">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between animate-fade-in-up">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <User className="h-8 w-8 text-primary" />
-              Patient Portal
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                <User className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Patient Portal
+              </h1>
+            </div>
+            <p className="text-muted-foreground">
               Smart appointments • AI insights • Health tracking
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={loadAllData}>
+            <Button variant="outline" onClick={loadAllData} className="btn-modern">
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
@@ -411,51 +415,59 @@ export default function PatientDashboard() {
 
         {/* Quick Stats */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Appointments</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Calendar className="h-4 w-4 text-primary" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{unifiedJourney?.summary?.totalAppointments || 0}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{unifiedJourney?.summary?.totalAppointments || 0}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {unifiedJourney?.summary?.upcomingAppointments || 0} upcoming
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Eye Tests</CardTitle>
-              <Eye className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-accent/10">
+                <Eye className="h-4 w-4 text-accent" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{unifiedJourney?.summary?.totalTests || 0}</div>
-              <p className="text-xs text-muted-foreground">Total tests</p>
+              <div className="text-3xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">{unifiedJourney?.summary?.totalTests || 0}</div>
+              <p className="text-xs text-muted-foreground mt-1">Total tests</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Prescriptions</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
+                <FileText className="h-4 w-4 text-yellow-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{unifiedJourney?.summary?.totalPrescriptions || 0}</div>
-              <p className="text-xs text-yellow-600">
+              <div className="text-3xl font-bold">{unifiedJourney?.summary?.totalPrescriptions || 0}</div>
+              <p className="text-xs text-yellow-600 font-semibold">
                 {unifiedJourney?.summary?.pendingPrescriptions || 0} pending
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Cases</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
+                <Activity className="h-4 w-4 text-green-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{unifiedJourney?.summary?.activeCases || 0}</div>
-              <p className="text-xs text-muted-foreground">Open cases</p>
+              <div className="text-3xl font-bold">{unifiedJourney?.summary?.activeCases || 0}</div>
+              <p className="text-xs text-muted-foreground mt-1">Open cases</p>
             </CardContent>
           </Card>
         </div>

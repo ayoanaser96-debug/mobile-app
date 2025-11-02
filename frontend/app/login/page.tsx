@@ -189,7 +189,7 @@ export default function LoginPage() {
 
   if (showFaceCapture) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
         <div className="w-full max-w-2xl">
           <FaceCapture
             mode={isLogin ? 'recognize' : 'register'}
@@ -203,7 +203,7 @@ export default function LoginPage() {
 
   if (showDocumentScanner && !isLogin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
         <div className="w-full max-w-2xl">
           <DocumentScanner
             onScanComplete={handleDocumentScan}
@@ -215,44 +215,50 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center login-page bg-background p-4 dashboard-theme" data-page="login" data-dashboard="true">
-      <div className="w-full max-w-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
+      </div>
+      
+      <div className="w-full max-w-2xl relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-8 space-y-3">
+        <div className="text-center mb-8 space-y-3 animate-fade-in-up">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-primary/20 rounded-full border border-primary/30">
-              <Eye className="h-8 w-8 text-primary" />
+            <div className="p-4 bg-gradient-to-br from-primary to-accent rounded-2xl shadow-xl animate-float">
+              <Eye className="h-10 w-10 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-primary tracking-tight">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
                 Vision Smart Clinic
               </h1>
-              <p className="text-lg text-primary/80 font-medium">
+              <p className="text-lg text-muted-foreground font-medium">
                 Advanced Eye Care Management
               </p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-2">
-            <Badge variant="outline" className="text-xs px-3 py-1 border-primary/50 text-primary">
+            <Badge variant="outline" className="text-xs px-3 py-1 border-primary/50 text-primary bg-primary/5">
               <Sparkles className="h-3 w-3 mr-1" />
               AI-Powered
             </Badge>
-            <Badge variant="outline" className="text-xs px-3 py-1 border-primary/50 text-primary">
+            <Badge variant="outline" className="text-xs px-3 py-1 border-primary/50 text-primary bg-primary/5">
               <Fingerprint className="h-3 w-3 mr-1" />
               Biometric Secure
             </Badge>
           </div>
         </div>
 
-        <Card className="w-full shadow-xl border-2 border-primary/30" style={{ backgroundColor: 'hsl(178.6, 84.3%, 10%)' }}>
+        <Card className="w-full glass-card shadow-2xl border border-primary/20 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <CardHeader className="space-y-4 pb-6">
             <div className="flex items-center justify-center gap-2">
               <Eye className="h-5 w-5 text-primary" />
-              <CardTitle className="text-3xl font-bold text-center text-white">
+              <CardTitle className="text-3xl font-bold text-center text-foreground">
                 Welcome Back
               </CardTitle>
             </div>
-            <CardDescription className="text-base text-center text-white/80">
+            <CardDescription className="text-base text-center text-muted-foreground">
               Access your account securely with multiple authentication methods
             </CardDescription>
           </CardHeader>
@@ -277,7 +283,7 @@ export default function LoginPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full h-12 text-base font-medium border-2 border-primary/50 hover:bg-primary/10 hover:border-primary"
+                    className="w-full h-12 text-base font-medium border-2 border-primary/50 hover:bg-primary/10 hover:border-primary btn-modern"
                     onClick={() => setShowFaceCapture(true)}
                   >
                     <Camera className="h-5 w-5 mr-2" />
@@ -286,7 +292,7 @@ export default function LoginPage() {
                   <Button
                     type="button"
                     variant="ghost"
-                    className="w-full h-11 text-base"
+                    className="w-full h-11 text-base btn-modern hover:bg-accent/10"
                     onClick={() => router.push('/face-checkin')}
                   >
                     <Fingerprint className="h-4 w-4 mr-2" />
@@ -338,7 +344,7 @@ export default function LoginPage() {
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full h-12 text-base font-semibold" 
+                    className="w-full h-12 text-base font-semibold btn-modern glow-primary" 
                     disabled={loading}
                   >
                     {loading ? 'Signing in...' : 'Sign In'}

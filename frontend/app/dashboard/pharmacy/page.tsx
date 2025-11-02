@@ -244,18 +244,22 @@ export default function PharmacyDashboard() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between animate-fade-in-up">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Package className="h-8 w-8 text-primary" />
-              Pharmacy Dashboard
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                <Package className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Pharmacy Dashboard
+              </h1>
+            </div>
+            <p className="text-muted-foreground">
               Smart prescription management, inventory, and analytics
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={loadAllData}>
+            <Button variant="outline" onClick={loadAllData} className="btn-modern">
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
@@ -264,53 +268,61 @@ export default function PharmacyDashboard() {
 
         {/* Quick Stats */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Prescriptions</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <FileText className="h-4 w-4 text-primary" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics?.totalPrescriptions || 0}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{analytics?.totalPrescriptions || 0}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {analytics?.pending || 0} pending
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Inventory Items</CardTitle>
-              <Box className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                <Box className="h-4 w-4 text-blue-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics?.totalInventoryItems || 0}</div>
-              <p className="text-xs text-red-600">
+              <div className="text-3xl font-bold">{analytics?.totalInventoryItems || 0}</div>
+              <p className="text-xs text-red-600 font-semibold">
                 {analytics?.lowStockItems || 0} low stock
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Revenue</CardTitle>
-              <DollarSign className="h-4 w-4 text-green-500" />
+              <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
+                <DollarSign className="h-4 w-4 text-green-500" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 ${analytics?.revenue?.toLocaleString() || '0'}
               </div>
-              <p className="text-xs text-muted-foreground">This period</p>
+              <p className="text-xs text-muted-foreground mt-1">This period</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Expiring Soon</CardTitle>
-              <AlertCircle className="h-4 w-4 text-orange-500" />
+              <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/30">
+                <AlertCircle className="h-4 w-4 text-orange-500" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{expiringSoon.length}</div>
-              <p className="text-xs text-muted-foreground">Next 30 days</p>
+              <div className="text-3xl font-bold">{expiringSoon.length}</div>
+              <p className="text-xs text-muted-foreground mt-1">Next 30 days</p>
             </CardContent>
           </Card>
         </div>

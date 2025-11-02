@@ -114,17 +114,21 @@ export default function AnalystDashboard() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between animate-fade-in-up">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-2">
-              <Brain className="h-8 w-8 text-primary" />
-              Analyst Dashboard
-            </h1>
-            <p className="text-muted-foreground mt-1">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                <Brain className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Analyst Dashboard
+              </h1>
+            </div>
+            <p className="text-muted-foreground">
               Eye Test & Analyzer Module - AI-assisted vision analysis
             </p>
           </div>
-          <Button onClick={() => setShowTestForm(!showTestForm)}>
+          <Button onClick={() => setShowTestForm(!showTestForm)} className="btn-modern glow-primary">
             <Upload className="h-4 w-4 mr-2" />
             {showTestForm ? 'View Pending Tests' : 'Enter Test Data'}
           </Button>
@@ -132,53 +136,57 @@ export default function AnalystDashboard() {
 
         {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Pending Tests</CardTitle>
-              <Eye className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Eye className="h-4 w-4 text-primary" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{pendingTests.length}</div>
-              <p className="text-xs text-muted-foreground">Awaiting analysis</p>
+              <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{pendingTests.length}</div>
+              <p className="text-xs text-muted-foreground mt-1">Awaiting analysis</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Analyzed Today</CardTitle>
-              <CheckCircle className="h-4 w-4 text-green-500" />
+              <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
+                <CheckCircle className="h-4 w-4 text-green-500" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-3xl font-bold">
                 {pendingTests.filter((t: any) => t.status === 'analyzed').length}
               </div>
-              <p className="text-xs text-muted-foreground">Completed</p>
+              <p className="text-xs text-muted-foreground mt-1">Completed</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">AI Analysis</CardTitle>
-              <Brain className="h-4 w-4 text-primary" />
+              <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30">
+                <Brain className="h-4 w-4 text-purple-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {pendingTests.filter((t: any) => t.aiAnalysis).length}
-              </div>
-              <p className="text-xs text-muted-foreground">AI processed</p>
+              <div className="text-3xl font-bold">{pendingTests.filter((t: any) => t.aiAnalysis).length}</div>
+              <p className="text-xs text-muted-foreground mt-1">AI processed</p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="card-modern hover:border-primary/50 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Ready for Doctor</CardTitle>
-              <FileText className="h-4 w-4 text-blue-500" />
+              <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                <FileText className="h-4 w-4 text-blue-500" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {pendingTests.filter((t: any) => t.status === 'doctor_review').length}
-              </div>
-              <p className="text-xs text-muted-foreground">Sent for review</p>
+              <div className="text-3xl font-bold">{pendingTests.filter((t: any) => t.status === 'doctor_review').length}</div>
+              <p className="text-xs text-muted-foreground mt-1">Sent for review</p>
             </CardContent>
           </Card>
         </div>

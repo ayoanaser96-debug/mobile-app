@@ -19,6 +19,7 @@ import { CasesModule } from './cases/cases.module';
 import { AuditModule } from './audit/audit.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { BillingModule } from './billing/billing.module';
+import { FaceRecognitionModule } from './face-recognition/face-recognition.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { BillingModule } from './billing/billing.module';
     AuditModule,
     AnalyticsModule,
     BillingModule,
+    FaceRecognitionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

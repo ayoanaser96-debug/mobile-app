@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserFace, UserFaceDocument } from './schemas/user-face.schema';
+import { spawn } from 'child_process';
+import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
+import { join } from 'path';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class FaceRecognitionService {
+  private readonly logger = new Logger(FaceRecognitionService.name);
+
   constructor(
     @InjectModel(UserFace.name)
     private userFaceModel: Model<UserFaceDocument>,
@@ -75,26 +80,115 @@ export class FaceRecognitionService {
 
   private async extractFaceDescriptor(imageBase64: string): Promise<string> {
     try {
-      // In production, this would use face-api.js or similar to extract face descriptors
-      // For now, we'll create a simplified descriptor based on image hash
+      // Try using Python DeepFace for real face recognition
+      const pythonResult = await this.runPythonFaceRecognition('extract', imageBase64);
       
-      // Simulated face descriptor extraction
-      // In real implementation, this would use actual face recognition library
+      if (pythonResult.success && pythonResult.descriptor) {
+        // Convert descriptor array to string for storage
+        return JSON.stringify(pythonResult.descriptor);
+      }
+      
+      // Fallback to hash-based descriptor if Python fails
+      this.logger.warn('Python face recognition not available, using hash-based fallback');
       const hash = this.imageHash(imageBase64);
       return Buffer.from(hash).toString('base64');
     } catch (error: any) {
-      throw new Error(`Failed to extract face descriptor: ${error.message}`);
+      this.logger.error(`Failed to extract face descriptor: ${error.message}`);
+      const hash = this.imageHash(imageBase64);
+      return Buffer.from(hash).toString('base64');
     }
+  }
+
+  /**
+   * Run Python face recognition scripts with proper error handling
+   */
+  private async runPythonFaceRecognition(operation: string, imageBase64: string, patientId?: string): Promise<any> {
+    return new Promise((resolve) => {
+      const tempImagePath = join(process.cwd(), `temp_${Date.now()}_${crypto.randomBytes(8).toString('hex')}.jpg`);
+      
+      try {
+        // Write base64 image to temp file
+        const buffer = Buffer.from(imageBase64, 'base64');
+        writeFileSync(tempImagePath, buffer);
+        
+        // Build Python command
+        const pythonScript = join(process.cwd(), 'auth_face_helper.py');
+        const args = [pythonScript, operation, tempImagePath];
+        if (patientId) {
+          args.push(patientId);
+        }
+        
+        const python = spawn('python3', args);
+        let output = '';
+        let error = '';
+        
+        python.stdout.on('data', (data) => {
+          output += data.toString();
+        });
+        
+        python.stderr.on('data', (data) => {
+          error += data.toString();
+        });
+        
+        python.on('close', (code) => {
+          // Clean up temp file
+          if (existsSync(tempImagePath)) {
+            unlinkSync(tempImagePath);
+          }
+          
+          if (code === 0 && output) {
+            try {
+              const result = JSON.parse(output.trim());
+              resolve(result);
+            } catch (e) {
+              this.logger.error('Failed to parse Python output', e);
+              resolve({ success: false, error: 'Failed to parse Python output' });
+            }
+          } else {
+            this.logger.error(`Python script failed: ${error}`);
+            resolve({ success: false, error: error || 'Python script failed' });
+          }
+        });
+        
+        python.on('error', (err) => {
+          // Clean up temp file
+          if (existsSync(tempImagePath)) {
+            unlinkSync(tempImagePath);
+          }
+          this.logger.error(`Python spawn error: ${err.message}`);
+          resolve({ success: false, error: err.message });
+        });
+      } catch (error: any) {
+        // Clean up temp file
+        if (existsSync(tempImagePath)) {
+          unlinkSync(tempImagePath);
+        }
+        this.logger.error(`Error running Python script: ${error.message}`);
+        resolve({ success: false, error: error.message });
+      }
+    });
   }
 
   private calculateDistance(descriptor1: string, descriptor2: string): number {
     try {
-      // Convert base64 back to compare
+      // Try parsing as JSON array (DeepFace descriptor)
+      try {
+        const d1Array = JSON.parse(descriptor1);
+        const d2Array = JSON.parse(descriptor2);
+        
+        if (Array.isArray(d1Array) && Array.isArray(d2Array)) {
+          // Calculate cosine similarity for vectors
+          return this.cosineDistance(d1Array, d2Array);
+        }
+      } catch (e) {
+        // Not JSON, continue with base64 decoding
+      }
+      
+      // Fallback to base64 comparison
       const d1 = Buffer.from(descriptor1, 'base64');
       const d2 = Buffer.from(descriptor2, 'base64');
 
       // Calculate Euclidean distance (simplified)
-      // In production, use proper face descriptor comparison
       let distance = 0;
       const minLength = Math.min(d1.length, d2.length);
       
@@ -107,6 +201,34 @@ export class FaceRecognitionService {
     } catch (error) {
       return 1.0; // Maximum distance if comparison fails
     }
+  }
+
+  /**
+   * Calculate cosine distance between two vectors
+   * Returns 0 for identical vectors, 1 for completely different
+   */
+  private cosineDistance(vec1: number[], vec2: number[]): number {
+    let dotProduct = 0;
+    let norm1 = 0;
+    let norm2 = 0;
+    
+    const minLength = Math.min(vec1.length, vec2.length);
+    
+    for (let i = 0; i < minLength; i++) {
+      dotProduct += vec1[i] * vec2[i];
+      norm1 += vec1[i] * vec1[i];
+      norm2 += vec2[i] * vec2[i];
+    }
+    
+    norm1 = Math.sqrt(norm1);
+    norm2 = Math.sqrt(norm2);
+    
+    if (norm1 === 0 || norm2 === 0) {
+      return 1.0;
+    }
+    
+    const similarity = dotProduct / (norm1 * norm2);
+    return 1 - similarity; // Return distance (0 = same, 1 = different)
   }
 
   private imageHash(imageBase64: string): string {

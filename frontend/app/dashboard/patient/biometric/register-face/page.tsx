@@ -51,19 +51,24 @@ export default function RegisterFacePage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-2xl mx-auto space-y-6">
+      <div className="max-w-2xl mx-auto space-y-6 animate-fade-in-up">
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => router.push('/dashboard/patient')}
+            className="btn-modern"
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Camera className="h-8 w-8 text-primary" />
-            Register Face Recognition
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+              <Camera className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Register Face Recognition
+            </h1>
+          </div>
         </div>
 
         {registered ? (
