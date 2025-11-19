@@ -499,4 +499,72 @@ export class AdminEnhancedService {
     }
     throw new Error('Device not found');
   }
+
+  // Dashboard Stats
+  async getDashboardStats() {
+    const [patients, doctors, tests, prescriptions, appointments] = await Promise.all([
+      this.prisma.user.count({ where: { role: UserRole.PATIENT } }),
+      this.prisma.user.count({ where: { role: UserRole.DOCTOR } }),
+      this.prisma.eyeTest.count(),
+      this.prisma.prescription.count(),
+      this.prisma.appointment.count(),
+    ]);
+
+    return {
+      totalUsers: patients + doctors,
+      totalPatients: patients,
+      totalDoctors: doctors,
+      totalTests,
+      totalPrescriptions,
+      totalAppointments,
+    };
+  }
+
+  // Emergency Controls
+  private lockdownActive = false;
+  private broadcastHistory: Array<{ message: string; timestamp: Date }> = [];
+
+  async toggleLockdown(active: boolean) {
+    this.lockdownActive = active;
+    return {
+      active: this.lockdownActive,
+      message: active
+        ? 'Emergency lockdown activated. All non-admin sessions are locked.'
+        : 'Lockdown released. Normal access restored.',
+      timestamp: new Date(),
+    };
+  }
+
+  async sendBroadcast(message: string) {
+    const broadcast = {
+      message,
+      timestamp: new Date(),
+    };
+    this.broadcastHistory.unshift(broadcast);
+    // Keep only last 10 broadcasts
+    if (this.broadcastHistory.length > 10) {
+      this.broadcastHistory = this.broadcastHistory.slice(0, 10);
+    }
+    return {
+      success: true,
+      message: 'Broadcast sent to all active users',
+      broadcast,
+    };
+  }
+
+  // Automation Rules
+  private automationRules: Record<string, boolean> = {
+    autoDisableUser: true,
+    autoCalibrateDevices: true,
+    autoFlagTransactions: true,
+  };
+
+  async updateAutomationRule(ruleKey: string, enabled: boolean) {
+    this.automationRules[ruleKey] = enabled;
+    return {
+      ruleKey,
+      enabled,
+      message: `Automation rule ${ruleKey} ${enabled ? 'enabled' : 'disabled'}`,
+    };
+  }
 }

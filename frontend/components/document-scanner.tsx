@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -34,11 +36,18 @@ export function DocumentScanner({ onScanComplete, onCancel, userId }: DocumentSc
   const [extractedData, setExtractedData] = useState<any>(null);
   const { toast } = useToast();
 
+  const stopCamera = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
+  }, [stream]);
+
   useEffect(() => {
     return () => {
       stopCamera();
     };
-  }, []);
+  }, [stopCamera]);
 
   const startCamera = async () => {
     try {
@@ -130,13 +139,6 @@ export function DocumentScanner({ onScanComplete, onCancel, userId }: DocumentSc
           variant: 'destructive',
         });
       }
-    }
-  };
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
     }
   };
 

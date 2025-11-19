@@ -1,0 +1,36 @@
+# Cursor Project Rules (v2.1.0)
+
+These guidelines apply to every project in this workspace.
+
+## ✅ Code Hygiene
+- No unused imports, variables, or functions
+- No empty `ref.listen()` calls
+- Check `mounted` before using `BuildContext` after async gaps
+- Use `context.pop()` guarded by `canPop()` for back navigation; avoid direct `context.go()` unless switching tabs
+- Dispose all controllers, listeners, and subscriptions
+- Add keys to list items when appropriate
+- Handle errors gracefully with user-friendly messaging/logging
+- Run `dart format` on edits
+- Fix all linter warnings/errors
+- Ensure tests pass (when applicable)
+- Consider accessibility for all UI changes
+- Follow security best practices
+- Maintain strict null safety
+
+## 🎯 Flutter-Specific Requirements
+- Use `pub` for dependencies
+- Prefer Riverpod for state management
+- Use GoRouter for navigation
+- Follow Flutter & Dart best practices per official docs
+
+## 📚 References
+- Flutter: https://flutter.dev/docs
+- Riverpod: https://riverpod.dev
+- GoRouter: https://pub.dev/packages/go_router
+- Dart Style: https://dart.dev/guides/language/effective-dart/style
+
+Last updated: 2024
+
+
+
+

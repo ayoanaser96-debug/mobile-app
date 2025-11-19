@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Camera, CheckCircle, RefreshCw } from 'lucide-react';
@@ -13,11 +13,7 @@ export function CameraPermissionHelper({ onPermissionGranted }: CameraPermission
   const [permissionStatus, setPermissionStatus] = useState<'unknown' | 'granted' | 'denied' | 'prompt'>('unknown');
   const [checking, setChecking] = useState(false);
 
-  useEffect(() => {
-    checkPermissions();
-  }, []);
-
-  const checkPermissions = async () => {
+  const checkPermissions = useCallback(async () => {
     setChecking(true);
     try {
       if (navigator.permissions) {
@@ -49,7 +45,11 @@ export function CameraPermissionHelper({ onPermissionGranted }: CameraPermission
     } finally {
       setChecking(false);
     }
-  };
+  }, [onPermissionGranted]);
+
+  useEffect(() => {
+    checkPermissions();
+  }, [checkPermissions]);
 
   const requestPermission = async () => {
     try {
@@ -101,7 +101,7 @@ export function CameraPermissionHelper({ onPermissionGranted }: CameraPermission
                 <strong>Chrome/Edge:</strong>
                 <ul className="list-disc list-inside ml-4 mt-1">
                   <li>Click the camera icon (🚫) in the address bar</li>
-                  <li>Select "Always allow camera access"</li>
+                  <li>Select &ldquo;Always allow camera access&rdquo;</li>
                   <li>Or go to Settings → Privacy → Site Settings → Camera</li>
                 </ul>
               </div>
@@ -109,7 +109,7 @@ export function CameraPermissionHelper({ onPermissionGranted }: CameraPermission
                 <strong>Firefox:</strong>
                 <ul className="list-disc list-inside ml-4 mt-1">
                   <li>Click the camera icon in the address bar</li>
-                  <li>Select "Allow" and check "Remember this decision"</li>
+                  <li>Select &ldquo;Allow&rdquo; and check &ldquo;Remember this decision&rdquo;</li>
                   <li>Or go to Preferences → Privacy → Permissions → Camera</li>
                 </ul>
               </div>
@@ -117,7 +117,7 @@ export function CameraPermissionHelper({ onPermissionGranted }: CameraPermission
                 <strong>Safari:</strong>
                 <ul className="list-disc list-inside ml-4 mt-1">
                   <li>Go to Safari → Settings → Websites → Camera</li>
-                  <li>Find this website and set to "Allow"</li>
+                  <li>Find this website and set to &ldquo;Allow&rdquo;</li>
                 </ul>
               </div>
               <div>

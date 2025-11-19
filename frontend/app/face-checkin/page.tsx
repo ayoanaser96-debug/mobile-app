@@ -123,7 +123,7 @@ export default function FaceCheckInPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-red-700">
-                We couldn't recognize your face. Please try again or use an alternative login method.
+                We couldn&rsquo;t recognize your face. Please try again or use an alternative login method.
               </p>
               <div className="flex gap-2">
                 <Button

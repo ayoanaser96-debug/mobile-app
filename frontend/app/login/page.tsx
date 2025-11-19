@@ -20,7 +20,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [showFaceCapture, setShowFaceCapture] = useState(false);
   const [showDocumentScanner, setShowDocumentScanner] = useState(false);
-  const [capturedFace, setCapturedFace] = useState(false);
+  const [capturedFace, setCapturedFace] = useState<string>('');
   const [scannedDocument, setScannedDocument] = useState<any>(null);
   const [formData, setFormData] = useState({
     identifier: '',
@@ -629,7 +629,7 @@ export default function LoginPage() {
                 className="p-0 h-auto text-base font-semibold underline"
                 onClick={() => {
                   setIsLogin(!isLogin);
-                  setCapturedFace(false);
+                  setCapturedFace('');
                   setScannedDocument(null);
                   setShowFaceCapture(false);
                   setShowDocumentScanner(false);

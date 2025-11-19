@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, ReactNode } from 'react';
+import { useCallback, useEffect, useState, ReactNode } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-provider';
 import { useRouter } from 'next/navigation';
@@ -73,7 +73,7 @@ import {
 
 export default function AdminDashboard() {
   const { user, loading } = useAuth();
-  const { theme, language, currency, setTheme, setLanguage, setCurrency } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
@@ -88,6 +88,8 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('ALL');
   const [savingSettings, setSavingSettings] = useState(false);
+  const [language, setLanguage] = useState<string>('en');
+  const [currency, setCurrency] = useState<string>('USD');
 
 
   // AI-Powered Operations Intelligence
@@ -119,26 +121,7 @@ export default function AdminDashboard() {
     }
   }, [user, loading, router]);
 
-  useEffect(() => {
-    if (user) {
-      loadAllData();
-      loadOperationsIntelligence();
-      startAutomatedMonitoring();
-    }
-  }, [user]);
-
-  // Real-time operations monitoring
-  useEffect(() => {
-    if (user) {
-      const interval = setInterval(() => {
-        loadIntelligentAlerts();
-        loadSystemOptimization();
-      }, 45000); // Every 45 seconds for admin
-      return () => clearInterval(interval);
-    }
-  }, [user]);
-
-  const loadAllData = async () => {
+  const loadAllData = useCallback(async () => {
     try {
       const [
         analyticsRes,
@@ -176,10 +159,10 @@ export default function AdminDashboard() {
         variant: 'destructive',
       });
     }
-  };
+  }, [toast]);
 
   // AI-Powered Operations Intelligence Functions
-  const loadOperationsIntelligence = async () => {
+  const loadOperationsIntelligence = useCallback(async () => {
     try {
       const [
         operationsRes,
@@ -233,7 +216,7 @@ export default function AdminDashboard() {
         }
       ]);
     }
-  };
+  }, []);
 
   const handleLockdownToggle = () => {
     setLockdownActive((prev) => {
@@ -282,7 +265,7 @@ export default function AdminDashboard() {
     });
   };
 
-  const loadIntelligentAlerts = async () => {
+  const loadIntelligentAlerts = useCallback(async () => {
     try {
       const res = await api.get('/admin/intelligent-alerts');
       setIntelligentAlerts(res.data || []);
@@ -311,9 +294,9 @@ export default function AdminDashboard() {
         }
       ]);
     }
-  };
+  }, []);
 
-  const loadSystemOptimization = async () => {
+  const loadSystemOptimization = useCallback(async () => {
     try {
       const res = await api.get('/admin/system-optimization');
       setSystemOptimization(res.data);
@@ -327,12 +310,30 @@ export default function AdminDashboard() {
         apiResponseTime: Math.floor(Math.random() * 50) + 120
       });
     }
-  };
+  }, []);
 
-  const startAutomatedMonitoring = () => {
+  const startAutomatedMonitoring = useCallback(() => {
     console.log('Starting automated clinic monitoring and intelligence...');
-  };
+  }, []);
 
+  useEffect(() => {
+    if (user) {
+      loadAllData();
+      loadOperationsIntelligence();
+      startAutomatedMonitoring();
+    }
+  }, [user, loadAllData, loadOperationsIntelligence, startAutomatedMonitoring]);
+
+  // Real-time operations monitoring
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(() => {
+        loadIntelligentAlerts();
+        loadSystemOptimization();
+      }, 45000); // Every 45 seconds for admin
+      return () => clearInterval(interval);
+    }
+  }, [user, loadIntelligentAlerts, loadSystemOptimization]);
 
   const handleRevokeAccess = async (userId: string) => {
     try {
@@ -1345,7 +1346,7 @@ export default function AdminDashboard() {
                   value={broadcastMessage}
                   onChange={(e) => setBroadcastMessage(e.target.value)}
                   className="w-full min-h-[120px] rounded-lg border border-border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder='Example: "Scheduled maintenance takes place tonight at 10 PM. Please save your work."'
+                  placeholder='Example: &quot;Scheduled maintenance takes place tonight at 10 PM. Please save your work.&quot;'
                 />
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">
@@ -1458,7 +1459,7 @@ export default function AdminDashboard() {
                   {savingSettings ? 'Saving...' : 'Save Settings'}
                 </Button>
                 <p className="text-xs text-muted-foreground">
-                  Changes apply immediately. Use "Save Settings" to persist to backend.
+                  Changes apply immediately. Use &quot;Save Settings&quot; to persist to backend.
                 </p>
               </CardContent>
             </Card>

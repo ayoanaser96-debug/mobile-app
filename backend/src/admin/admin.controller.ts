@@ -149,5 +149,31 @@ export class AdminController {
   async calibrateDevice(@Param('deviceId') deviceId: string) {
     return this.adminEnhancedService.calibrateDevice(deviceId);
   }
+
+  // Dashboard Stats
+  @Get('dashboard-stats')
+  async getDashboardStats() {
+    return this.adminEnhancedService.getDashboardStats();
+  }
+
+  // Emergency Controls
+  @Post('controls/lockdown')
+  async toggleLockdown(@Body() body: { active: boolean }) {
+    return this.adminEnhancedService.toggleLockdown(body.active);
+  }
+
+  @Post('controls/broadcast')
+  async sendBroadcast(@Body() body: { message: string }) {
+    return this.adminEnhancedService.sendBroadcast(body.message);
+  }
+
+  // Automation Rules
+  @Put('automation/:ruleKey')
+  async updateAutomationRule(
+    @Param('ruleKey') ruleKey: string,
+    @Body() body: { enabled: boolean },
+  ) {
+    return this.adminEnhancedService.updateAutomationRule(ruleKey, body.enabled);
+  }
 }
 

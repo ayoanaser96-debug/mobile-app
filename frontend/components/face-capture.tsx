@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Camera, CheckCircle, XCircle, RotateCcw, User } from 'lucide-react';
@@ -24,12 +26,19 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
   const [availableDevices, setAvailableDevices] = useState<Array<{deviceId: string; label: string}>>([]);
   const { toast } = useToast();
 
+  const stopCamera = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
+  }, [stream]);
+
   useEffect(() => {
     // Don't auto-start camera, wait for user interaction
     return () => {
       stopCamera();
     };
-  }, []);
+  }, [stopCamera]);
 
   useEffect(() => {
     // Ensure video plays when stream is set
@@ -139,7 +148,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         setError(''); // Clear any previous errors
         
         // Enumerate devices now that we have permission
-        const devices = await enumerateDevices(true);
+        const devices = await enumerateDevices(true) as Array<{deviceId: string; label: string}>;
         setAvailableDevices(devices);
         console.log('Available cameras:', devices);
         console.log('Camera stream set successfully');
@@ -168,7 +177,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
         // or if cameras are truly not available
         let devices: Array<{deviceId: string; label: string}> = [];
         try {
-          devices = await enumerateDevices(true);
+          devices = await enumerateDevices(true) as Array<{deviceId: string; label: string}>;
         } catch (enumError) {
           console.error('Failed to enumerate devices:', enumError);
         }
@@ -210,13 +219,6 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
       }
       
       setError(errorMessage);
-    }
-  };
-
-  const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
     }
   };
 
@@ -325,7 +327,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
                           <p className="text-yellow-700 text-xs mb-2">This usually means:</p>
                           <ol className="list-decimal list-inside ml-2 space-y-1 text-yellow-700">
                             <li>Camera is disabled in macOS System Settings</li>
-                            <li>Browser doesn't have permission to see cameras</li>
+                            <li>Browser doesn&apos;t have permission to see cameras</li>
                             <li>No camera hardware is connected</li>
                           </ol>
                         </div>
@@ -335,20 +337,20 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
                         <li className="font-semibold">Open System Settings
                           <ul className="list-disc list-inside ml-4 mt-1 font-normal">
                             <li>Click Apple menu → System Settings</li>
-                            <li>Or press Cmd + Space and type "System Settings"</li>
+                            <li>Or press Cmd + Space and type &quot;System Settings&quot;</li>
                           </ul>
                         </li>
                         <li className="font-semibold">Go to Privacy & Security → Camera
                           <ul className="list-disc list-inside ml-4 mt-1 font-normal">
-                            <li>Click "Privacy & Security" in the sidebar</li>
-                            <li>Click "Camera" in the list</li>
+                            <li>Click &quot;Privacy & Security&quot; in the sidebar</li>
+                            <li>Click &quot;Camera&quot; in the list</li>
                           </ul>
                         </li>
                         <li className="font-semibold">Enable your browser
                           <ul className="list-disc list-inside ml-4 mt-1 font-normal">
                             <li>Find your browser (Chrome, Safari, Firefox, etc.)</li>
                             <li>Toggle the switch to ON (green)</li>
-                            <li>If you don't see your browser, try accessing the camera first, then check again</li>
+                            <li>If you don&apos;t see your browser, try accessing the camera first, then check again</li>
                           </ul>
                         </li>
                         <li className="font-semibold">Verify camera works
@@ -362,7 +364,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
                             <li>Quit your browser completely (Cmd + Q)</li>
                             <li>Reopen the browser</li>
                             <li>Refresh this page</li>
-                            <li>Click "Start Camera" again</li>
+                            <li>Click &quot;Start Camera&quot; again</li>
                           </ul>
                         </li>
                       </ol>
@@ -370,9 +372,9 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
                         <p className="font-medium text-blue-800 mb-2">💡 Quick Test:</p>
                         <p className="text-blue-700 text-xs mb-2">Before fixing settings, test if your camera works:</p>
                         <ol className="list-decimal list-inside ml-2 text-blue-700 text-xs space-y-1">
-                          <li>Open Photo Booth app (Cmd + Space, type "Photo Booth")</li>
-                          <li>If Photo Booth shows your camera, hardware is OK - it's a permission issue</li>
-                          <li>If Photo Booth doesn't work, check System Settings → Privacy & Security → Camera</li>
+                          <li>Open Photo Booth app (Cmd + Space, type &quot;Photo Booth&quot;)</li>
+                          <li>If Photo Booth shows your camera, hardware is OK - it&apos;s a permission issue</li>
+                          <li>If Photo Booth doesn&apos;t work, check System Settings → Privacy & Security → Camera</li>
                         </ol>
                       </div>
                     </div>
@@ -426,7 +428,7 @@ export function FaceCapture({ onCapture, onCancel, mode = 'register', userId }: 
                           await new Promise(resolve => setTimeout(resolve, 500));
                           
                           // Now enumerate devices (should have labels now)
-                          const devices = await enumerateDevices(true);
+                          const devices = await enumerateDevices(true) as Array<{deviceId: string; label: string}>;
                           setAvailableDevices(devices);
                           
                           if (devices.length > 0) {

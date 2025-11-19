@@ -235,7 +235,7 @@ export default function PatientJourneyPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Patient ID</p>
-                  <p className="font-semibold text-lg">{user._id || user.id}</p>
+                  <p className="font-semibold text-lg">{(user as any)._id || (user as any).id || user?.id || ''}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Role</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,38 +48,25 @@ export function SmartPrescription({ patientId, diagnosis, onSave, allowPatientSe
     notes: '',
   });
 
-  useEffect(() => {
-    if (allowPatientSelection && !patientId) {
-      loadPatients();
-    }
-  }, [allowPatientSelection, patientId]);
-
-  useEffect(() => {
-    loadTemplates();
-    if (diagnosis) {
-      loadAISuggestions();
-    }
-  }, [diagnosis]);
-
-  const loadPatients = async () => {
+  const loadPatients = useCallback(async () => {
     try {
       const res = await api.get('/admin/users?role=patient');
       setPatients(res.data || []);
     } catch (error) {
       console.error('Error loading patients:', error);
     }
-  };
+  }, []);
 
-  const loadTemplates = async () => {
+  const loadTemplates = useCallback(async () => {
     try {
       const res = await api.get('/prescriptions/templates');
       setTemplates(res.data || []);
     } catch (error) {
       console.error('Error loading templates:', error);
     }
-  };
+  }, []);
 
-  const loadAISuggestions = async () => {
+  const loadAISuggestions = useCallback(async () => {
     if (!diagnosis) return;
     try {
       const res = await api.post('/prescriptions/ai-suggestions', { diagnosis });
@@ -90,7 +77,20 @@ export function SmartPrescription({ patientId, diagnosis, onSave, allowPatientSe
     } catch (error) {
       console.error('Error loading AI suggestions:', error);
     }
-  };
+  }, [diagnosis, toast]);
+
+  useEffect(() => {
+    if (allowPatientSelection && !patientId) {
+      loadPatients();
+    }
+  }, [allowPatientSelection, patientId, loadPatients]);
+
+  useEffect(() => {
+    loadTemplates();
+    if (diagnosis) {
+      loadAISuggestions();
+    }
+  }, [diagnosis, loadTemplates, loadAISuggestions]);
 
   const applySuggestion = (suggestion: any) => {
     if (suggestion.medications) {

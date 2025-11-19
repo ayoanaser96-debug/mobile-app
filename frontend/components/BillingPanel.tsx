@@ -65,9 +65,9 @@ export function BillingPanel({
       });
 
       // Company colors
-      const primaryColor = [59, 130, 246]; // Blue
-      const secondaryColor = [16, 185, 129]; // Green
-      const textColor = [31, 41, 55]; // Dark gray
+      const primaryColor: [number, number, number] = [59, 130, 246]; // Blue
+      const secondaryColor: [number, number, number] = [16, 185, 129]; // Green
+      const textColor: [number, number, number] = [31, 41, 55]; // Dark gray
 
       // Header Section with Logo Placeholder
       doc.setFillColor(...primaryColor);

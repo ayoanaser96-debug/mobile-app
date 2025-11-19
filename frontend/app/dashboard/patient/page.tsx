@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
+
+import { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-provider';
 import { useRouter } from 'next/navigation';
@@ -80,8 +82,9 @@ import {
 
 export default function PatientDashboard() {
   const { user, loading } = useAuth();
-  const { theme, language, setTheme, setLanguage } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
+  const [language, setLanguage] = useState<string>('en');
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
   
@@ -126,36 +129,7 @@ export default function PatientDashboard() {
     }
   }, [user, loading, router]);
 
-  // Auto-refresh prescriptions every 30 seconds to show real-time updates
-  useEffect(() => {
-    if (user) {
-      const interval = setInterval(() => {
-        loadAllData();
-      }, 30000); // Refresh every 30 seconds
-      return () => clearInterval(interval);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      loadAllData();
-      loadIntelligentFeatures();
-      startRealTimeUpdates();
-    }
-  }, [user]);
-
-  // Real-time updates every 30 seconds
-  useEffect(() => {
-    if (user) {
-      const interval = setInterval(() => {
-        loadRealTimeMetrics();
-        loadSmartNotifications();
-      }, 30000);
-      return () => clearInterval(interval);
-    }
-  }, [user]);
-
-  const loadAllData = async () => {
+  const loadAllData = useCallback(async () => {
     try {
       const [
         journeyRes,
@@ -196,7 +170,7 @@ export default function PatientDashboard() {
         variant: 'destructive',
       });
     }
-  };
+  }, [toast]);
 
   // AI-Powered Intelligent Functions
   const loadIntelligentFeatures = async () => {
@@ -307,6 +281,35 @@ export default function PatientDashboard() {
     // Initialize WebSocket or Server-Sent Events for real-time updates
     console.log('Starting real-time intelligence updates...');
   };
+
+  // Auto-refresh prescriptions every 30 seconds to show real-time updates
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(() => {
+        loadAllData();
+      }, 30000); // Refresh every 30 seconds
+      return () => clearInterval(interval);
+    }
+  }, [user, loadAllData]);
+
+  useEffect(() => {
+    if (user) {
+      loadAllData();
+      loadIntelligentFeatures();
+      startRealTimeUpdates();
+    }
+  }, [user, loadAllData]);
+
+  // Real-time updates every 30 seconds
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(() => {
+        loadRealTimeMetrics();
+        loadSmartNotifications();
+      }, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user]);
 
   const handleBookAppointment = async (urgency?: string) => {
     try {

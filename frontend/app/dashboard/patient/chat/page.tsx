@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { DashboardLayout } from '@/components/dashboard-layout';
@@ -26,93 +26,10 @@ export default function PatientChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [loadingContacts, setLoadingContacts] = useState(true);
 
-  useEffect(() => {
-    const normalizedRole = user?.role?.toUpperCase() || '';
-    if (!loading && normalizedRole !== 'PATIENT') {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
-
-  useEffect(() => {
-    loadContacts();
-    
-      // Initialize Socket.io connection (optional - will work without socket)
-      // In production, you would connect here
-      if (user && false) { // Disabled for now - use REST API
-        try {
-          const token = localStorage.getItem('token');
-          const newSocket = io('http://localhost:3001', {
-            auth: {
-              token,
-            },
-            transports: ['websocket'],
-          });
-
-          newSocket.on('connect', () => {
-            console.log('Connected to chat server');
-          });
-
-          newSocket.on('message', (message: any) => {
-            setMessages((prev) => [...prev, message]);
-          });
-
-          newSocket.on('error', (error: any) => {
-            console.error('Socket error:', error);
-          });
-
-          setSocket(newSocket);
-
-          return () => {
-            newSocket.close();
-          };
-        } catch (error) {
-          console.error('Failed to connect to socket:', error);
-        }
-      }
-  }, [user]);
-
-  useEffect(() => {
-    const userId = searchParams.get('userId') || searchParams.get('doctorId');
-    const emergency = searchParams.get('emergency') === 'true';
-    const video = searchParams.get('video') === 'true';
-
-    if (contacts.length > 0) {
-      if (userId) {
-        const contact = contacts.find((c: any) => c._id === userId);
-        if (contact) setSelectedContact(contact);
-      } else if (emergency || video) {
-        // Pick the first doctor contact for quick actions
-        const doctor = contacts.find((c: any) => (c.role || '').toUpperCase() === 'DOCTOR') || contacts[0];
-        if (doctor) {
-          setSelectedContact(doctor);
-          // Send quick system message
-          const quickMsg = emergency
-            ? 'Emergency support requested. Please respond as soon as possible.'
-            : 'Teleconsultation requested. Please start a video call when available.';
-          api
-            .post('/chat/message', { receiverId: doctor._id, message: quickMsg })
-            .then(() => loadConversation(doctor._id))
-            .catch(() => {});
-        }
-      }
-    }
-  }, [searchParams, contacts]);
-
-  useEffect(() => {
-    if (selectedContact) {
-      loadConversation(selectedContact._id);
-    }
-  }, [selectedContact]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const loadContacts = async () => {
+  const loadContacts = useCallback(async () => {
     try {
       setLoadingContacts(true);
       
-      // Get doctors, optometrists, and pharmacists from appointments and cases
       const [appointmentsRes, prescriptionsRes] = await Promise.all([
         api.get('/appointments/my-appointments').catch(() => ({ data: [] })),
         api.get('/prescriptions/my-prescriptions').catch(() => ({ data: [] })),
@@ -120,7 +37,6 @@ export default function PatientChatPage() {
 
       const contactsMap = new Map();
 
-      // Add doctors from appointments
       appointmentsRes.data?.forEach((apt: any) => {
         if (apt.doctorId && !contactsMap.has(apt.doctorId._id)) {
           contactsMap.set(apt.doctorId._id, {
@@ -134,7 +50,6 @@ export default function PatientChatPage() {
         }
       });
 
-      // Add doctors from prescriptions
       prescriptionsRes.data?.forEach((pres: any) => {
         if (pres.doctorId && !contactsMap.has(pres.doctorId._id)) {
           contactsMap.set(pres.doctorId._id, {
@@ -159,23 +74,112 @@ export default function PatientChatPage() {
     } finally {
       setLoadingContacts(false);
     }
-  };
+  }, [toast]);
 
-  const loadConversation = async (contactId: string) => {
-    try {
-      const res = await api.get('/chat/conversation', {
-        params: { userId: contactId },
-      });
-      setMessages(res.data || []);
-    } catch (error: any) {
-      console.error('Error loading conversation:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to load conversation',
-        variant: 'destructive',
-      });
+  const loadConversation = useCallback(
+    async (contactId: string) => {
+      try {
+        const res = await api.get('/chat/conversation', {
+          params: { userId: contactId },
+        });
+        setMessages(res.data || []);
+      } catch (error: any) {
+        console.error('Error loading conversation:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load conversation',
+          variant: 'destructive',
+        });
+      }
+    },
+    [toast],
+  );
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    loadContacts();
+
+    if (user && false) {
+      try {
+        const token = localStorage.getItem('token');
+        const newSocket = io('http://localhost:3001', {
+          auth: {
+            token,
+          },
+          transports: ['websocket'],
+        });
+
+        newSocket.on('connect', () => {
+          console.log('Connected to chat server');
+        });
+
+        newSocket.on('message', (message: any) => {
+          setMessages((prev) => [...prev, message]);
+        });
+
+        newSocket.on('error', (error: any) => {
+          console.error('Socket error:', error);
+        });
+
+        setSocket(newSocket);
+
+        return () => {
+          newSocket.close();
+        };
+      } catch (error) {
+        console.error('Failed to connect to socket:', error);
+      }
     }
-  };
+  }, [user, loadContacts]);
+
+  useEffect(() => {
+    const normalizedRole = user?.role?.toUpperCase() || '';
+    if (!loading && normalizedRole !== 'PATIENT') {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+  
+
+  useEffect(() => {
+    const userId = searchParams.get('userId') || searchParams.get('doctorId');
+    const emergency = searchParams.get('emergency') === 'true';
+    const video = searchParams.get('video') === 'true';
+
+    if (contacts.length > 0) {
+      if (userId) {
+        const contact = contacts.find((c: any) => c._id === userId);
+        if (contact) setSelectedContact(contact);
+      } else if (emergency || video) {
+        const doctor = contacts.find((c: any) => (c.role || '').toUpperCase() === 'DOCTOR') || contacts[0];
+        if (doctor) {
+          setSelectedContact(doctor);
+          const quickMsg =
+            emergency
+              ? 'Emergency support requested. Please respond as soon as possible.'
+              : 'Teleconsultation requested. Please start a video call when available.';
+          api
+            .post('/chat/message', { receiverId: doctor._id, message: quickMsg })
+            .then(() => loadConversation(doctor._id))
+            .catch(() => {});
+        }
+      }
+    }
+  }, [searchParams, contacts, loadConversation]);
+
+  useEffect(() => {
+    if (selectedContact) {
+      loadConversation(selectedContact._id);
+    }
+  }, [selectedContact, loadConversation]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, scrollToBottom]);
+
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !selectedContact) return;
@@ -213,10 +217,6 @@ export default function PatientChatPage() {
         variant: 'destructive',
       });
     }
-  };
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const getContactDisplayName = (contact: any) => {

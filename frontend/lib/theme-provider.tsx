@@ -43,27 +43,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    const root = document.documentElement;
-    const body = document.body;
-    const actual = getActualTheme(theme);
-    
-    root.classList.remove('dark');
-    body.classList.remove('dark');
-    
-    if (actual === 'dark') {
-      root.classList.add('dark');
-      body.classList.add('dark');
-      root.setAttribute('data-theme', 'dark');
-    } else {
-      root.setAttribute('data-theme', 'light');
-    }
-    
-    setActualTheme(actual);
-  }, []); // Run once on mount
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
     const applyThemeToDOM = (currentTheme: 'light' | 'dark' | 'auto') => {
       const actual = getActualTheme(currentTheme);
       setActualTheme(actual);

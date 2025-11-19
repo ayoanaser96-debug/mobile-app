@@ -12,14 +12,16 @@ import { Label } from '@/components/ui/label';
 import { EyeTestForm } from '@/components/eye-test-form';
 import api from '@/lib/api';
 import { Eye, CheckCircle, XCircle, Brain, Activity, Upload, TestTube, Camera, FileText, Search } from 'lucide-react';
+import Image from 'next/image';
 import { useToast } from '@/components/ui/use-toast';
 
 export default function OptometristDashboard() {
   const { user, loading } = useAuth();
-  const { theme, language, setTheme, setLanguage } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { toast } = useToast();
   const [savingSettings, setSavingSettings] = useState(false);
+  const [language, setLanguage] = useState<string>('en');
   const [pendingTests, setPendingTests] = useState([]);
   const [selectedTest, setSelectedTest] = useState<any>(null);
   const [notes, setNotes] = useState('');
@@ -391,13 +393,22 @@ export default function OptometristDashboard() {
                   </h3>
                   <div className="grid grid-cols-3 gap-4">
                     {selectedTest.retinaImages.map((image: string, index: number) => (
-                      <img
+                      <button
+                        type="button"
                         key={index}
-                        src={image}
-                        alt={`Retina image ${index + 1}`}
-                        className="w-full h-40 object-cover rounded-lg border cursor-pointer hover:opacity-80 transition-opacity"
                         onClick={() => window.open(image, '_blank')}
-                      />
+                        className="rounded-lg border overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        <div className="relative h-40 w-full">
+                          <Image
+                            src={image}
+                            alt={`Retina image ${index + 1}`}
+                            fill
+                            className="object-cover transition-opacity hover:opacity-80"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 200px"
+                          />
+                        </div>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -540,7 +551,7 @@ export default function OptometristDashboard() {
               {savingSettings ? 'Saving...' : 'Save Settings'}
             </Button>
             <p className="text-xs text-muted-foreground">
-              Changes apply immediately. Use "Save Settings" to persist to backend.
+              Changes apply immediately. Use &quot;Save Settings&quot; to persist to backend.
             </p>
           </CardContent>
         </Card>

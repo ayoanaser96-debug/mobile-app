@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable react/no-unescaped-entities */
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useTheme } from '@/lib/theme-provider';
@@ -52,10 +54,11 @@ import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Cart
 
 export default function DoctorDashboard() {
   const { user, loading } = useAuth();
-  const { theme, language, setTheme, setLanguage } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const { toast } = useToast();
   const [savingSettings, setSavingSettings] = useState(false);
+  const [language, setLanguage] = useState<string>('en');
   const [activeTab, setActiveTab] = useState('overview');
   const [cases, setCases] = useState([]);
   const [appointments, setAppointments] = useState([]);
@@ -376,7 +379,7 @@ export default function DoctorDashboard() {
   };
 
   const handleAddToCalendar = (event: string) => {
-    toast({ title: 'Added to Calendar', description: `"${event}" added to your calendar` });
+    toast({ title: 'Added to Calendar', description: `${event} added to your calendar` });
   };
 
   const handleSendQuickMessage = async () => {
@@ -1186,7 +1189,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">2 min ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "Doctor, I'm experiencing some blurry vision after the treatment. Should I be concerned?"
+                      &ldquo;Doctor, I&rsquo;m experiencing some blurry vision after the treatment. Should I be concerned?&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -1213,7 +1216,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">1 hour ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "Thank you for the prescription. When should I schedule my follow-up appointment?"
+                      &ldquo;Thank you for the prescription. When should I schedule my follow-up appointment?&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -1240,7 +1243,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">3 hours ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "I need to reschedule my appointment for next week. Are there any available slots?"
+                      &ldquo;I need to reschedule my appointment for next week. Are there any available slots?&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -1279,7 +1282,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">15 min ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "Ahmed Ali's eye pressure test shows elevated readings. Please review when available."
+                      &ldquo;Ahmed Ali&rsquo;s eye pressure test shows elevated readings. Please review when available.&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -1306,7 +1309,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">1 hour ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "Patient in Room 3 is ready for examination. All pre-tests completed."
+                      &ldquo;Patient in Room 3 is ready for examination. All pre-tests completed.&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -1333,7 +1336,7 @@ export default function DoctorDashboard() {
                       <span className="text-xs text-muted-foreground">2 hours ago</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">
-                      "New equipment calibration scheduled for tomorrow at 2 PM. Please plan accordingly."
+                      &ldquo;New equipment calibration scheduled for tomorrow at 2 PM. Please plan accordingly.&rdquo;
                     </p>
                     <div className="flex gap-2">
                       <Button 
@@ -2009,7 +2012,7 @@ export default function DoctorDashboard() {
                   {savingSettings ? 'Saving...' : 'Save Settings'}
                 </Button>
                 <p className="text-xs text-muted-foreground">
-                  Changes apply immediately. Use "Save Settings" to persist to backend.
+                  Changes apply immediately. Use &ldquo;Save Settings&rdquo; to persist to backend.
                 </p>
               </CardContent>
             </Card>
