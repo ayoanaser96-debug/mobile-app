@@ -14,11 +14,21 @@ class ApiEndpoints {
   static const String prescriptionTracking = '/patients/prescription-tracking';
   static const String aiInsights = '/patients/ai-insights';
   static const String healthDashboard = '/patients/health-dashboard';
+  static const String finalResults = '/patients/final-results';
+  static const String comparativeAnalysis = '/patients/comparative-analysis';
+  static const String patientJourneyCheckIn = '/patients/journey/check-in';
+  static const String patientJourneyGet = '/patients/journey';
+  static const String patientJourneyReceipt = '/patients/journey/receipt';
+  static String patientJourneyStepComplete(String step) => '/patients/journey/$step/complete';
+  static const String patientJourneyActive = '/patients/journey/active';
   
   // Appointments
   static const String appointments = '/appointments';
   static const String myAppointments = '/appointments/my-appointments';
   static const String appointmentWaitTime = '/patients/appointments';
+  
+  // Users/Doctors
+  static const String doctors = '/users/doctors';
   
   // Eye Tests
   static const String eyeTests = '/eye-tests';
@@ -45,6 +55,9 @@ class ApiEndpoints {
   static const String analytics = '/analytics';
   static const String testTrends = '/analytics/test-trends';
 }
+
+
+
 
 
 

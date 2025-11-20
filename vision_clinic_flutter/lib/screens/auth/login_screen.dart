@@ -73,17 +73,58 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     });
 
     if (success) {
-      final authState = ref.read(authNotifierProvider).valueOrNull;
-      if (authState?.user != null) {
-        _navigateToDashboard(authState!.user!.role);
+      if (!mounted) return;
+      
+      // Get user directly from storage (most reliable)
+      final authService = ref.read(authServiceProvider);
+      final user = await authService.getCurrentUser();
+      
+      if (user != null) {
+        // Navigate to dashboard based on role
+        _navigateToDashboard(user.role);
+      } else {
+        // If user is null, wait a bit and try again
+        await Future.delayed(const Duration(milliseconds: 500));
+        final retryUser = await authService.getCurrentUser();
+        if (retryUser != null && mounted) {
+          _navigateToDashboard(retryUser.role);
+        } else if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Login successful! Redirecting...'),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          // Force navigation by refreshing auth state
+          await ref.read(authNotifierProvider.notifier).refresh();
+          await Future.delayed(const Duration(milliseconds: 300));
+          final authState = ref.read(authNotifierProvider).valueOrNull;
+          if (authState?.user != null && mounted) {
+            _navigateToDashboard(authState!.user!.role);
+          }
+        }
       }
     } else {
       final error = ref.read(authNotifierProvider).error;
+      String errorMessage = 'Login failed. Please check your credentials.';
+      
+      if (error != null) {
+        // Extract error message from exception
+        final errorString = error.toString();
+        if (errorString.contains('Exception: ')) {
+          errorMessage = errorString.replaceFirst('Exception: ', '');
+        } else {
+          errorMessage = errorString;
+        }
+      }
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(error?.toString() ?? 'Login failed'),
+          content: Text(errorMessage),
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 4),
         ),
       );
     }
@@ -486,12 +527,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       const Text('Don\'t have an account? '),
                       TextButton(
                         onPressed: () {
-                          // TODO: Navigate to register
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Registration feature coming soon'),
-                            ),
-                          );
+                          context.push('/register');
                         },
                         child: const Text(
                           'Register',

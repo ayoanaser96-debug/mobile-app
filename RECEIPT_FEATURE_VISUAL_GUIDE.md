@@ -281,3 +281,7 @@ The receipt feature is fully functional and ready for production use. Patients c
 
 
 
+
+
+
+

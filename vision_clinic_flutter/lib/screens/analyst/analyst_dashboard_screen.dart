@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../providers/services_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../models/eye_test_model.dart';
+import '../../services/patient_service.dart';
 import '../../models/notification_model.dart' as models;
 import '../../widgets/loading_widget.dart';
 import '../../widgets/error_widget.dart';
@@ -523,6 +524,24 @@ class _AnalystDashboardScreenState extends ConsumerState<AnalystDashboardScreen>
                   'status': 'ANALYZED',
                   'notes': 'Test analyzed',
                 });
+                
+                // Mark optometrist journey step as complete when test is analyzed
+                try {
+                  final patientService = ref.read(patientServiceProvider);
+                  await patientService.markJourneyStepComplete('optometrist', test.patientId);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Test analyzed and journey step completed!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                  } catch (journeyError) {
+                    // Journey update failed, but test analysis succeeded
+                    print('Journey update error: $journeyError');
+                  }
+                
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(

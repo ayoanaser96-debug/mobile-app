@@ -33,6 +33,23 @@ export class UsersService {
       data: { status: status as UserStatus },
     });
   }
+
+  async findDoctors() {
+    return this.prisma.user.findMany({
+      where: {
+        role: UserRole.DOCTOR,
+        status: UserStatus.ACTIVE,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        specialty: true,
+        phone: true,
+      },
+    });
+  }
 }
 
 

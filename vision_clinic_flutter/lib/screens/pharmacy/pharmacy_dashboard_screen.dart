@@ -521,6 +521,26 @@ class _PharmacyDashboardScreenState extends ConsumerState<PharmacyDashboardScree
               try {
                 final service = ref.read(pharmacyServiceProvider);
                 await service.updatePrescriptionStatus(prescription.id, status);
+                
+                // Mark pharmacy journey step as complete when prescription is filled
+                if (status == PrescriptionStatus.filled) {
+                  try {
+                    final patientService = ref.read(patientServiceProvider);
+                    await patientService.markJourneyStepComplete('pharmacy', prescription.patientId);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Prescription filled and journey step completed!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                  } catch (journeyError) {
+                    // Journey update failed, but prescription update succeeded
+                    print('Journey update error: $journeyError');
+                  }
+                }
+                
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(

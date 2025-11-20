@@ -20,7 +20,13 @@ class PatientService {
     try {
       final response = await _apiService.get(ApiEndpoints.myAppointments);
       return (response.data as List)
-          .map((json) => Appointment.fromJson(json))
+          .map((json) {
+            // Handle null appointmentTime
+            if (json['appointmentTime'] == null) {
+              json['appointmentTime'] = '09:00'; // Default time
+            }
+            return Appointment.fromJson(json);
+          })
           .toList();
     } catch (e) {
       rethrow;
@@ -91,6 +97,116 @@ class PatientService {
     try {
       final response = await _apiService.get(ApiEndpoints.healthDashboard);
       return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getFinalResults() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.finalResults);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getPrescriptionTracking() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.prescriptionTracking);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getComparativeAnalysis({String? testId}) async {
+    try {
+      final response = await _apiService.get(
+        ApiEndpoints.comparativeAnalysis,
+        queryParameters: testId != null ? {'testId': testId} : null,
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getWaitTime(String appointmentId) async {
+    try {
+      final response = await _apiService.get(
+        '${ApiEndpoints.appointmentWaitTime}/$appointmentId/wait-time',
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> checkInJourney() async {
+    try {
+      final response = await _apiService.post(ApiEndpoints.patientJourneyCheckIn);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getJourney() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.patientJourneyGet);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getJourneyReceipt() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.patientJourneyReceipt);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> markJourneyStepComplete(String step, String patientId, {String? notes}) async {
+    try {
+      final response = await _apiService.post(
+        ApiEndpoints.patientJourneyStepComplete(step.toLowerCase()),
+        data: {
+          'patientId': patientId,
+          if (notes != null) 'notes': notes,
+        },
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getActiveJourneys() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.patientJourneyActive);
+      return (response.data as List).map((e) => e as Map<String, dynamic>).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getAvailableDoctors() async {
+    try {
+      final response = await _apiService.get(ApiEndpoints.doctors);
+      return (response.data as List).map((e) => e as Map<String, dynamic>).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<EyeTest> createEyeTest(Map<String, dynamic> data) async {
+    try {
+      final response = await _apiService.post(ApiEndpoints.eyeTests, data: data);
+      return EyeTest.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

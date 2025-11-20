@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/services_provider.dart';
 import '../../models/appointment_model.dart';
+import '../../services/patient_service.dart';
 import '../../models/eye_test_model.dart';
 import '../../models/prescription_model.dart';
 import '../../models/user_model.dart';
@@ -682,7 +683,7 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
     );
   }
 
-  void _approveTest(BuildContext context, EyeTest test) {
+  void _approveTest(BuildContext context, EyeTest test) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -698,6 +699,24 @@ class _DoctorDashboardScreenState extends ConsumerState<DoctorDashboardScreen> {
               try {
                 final service = ref.read(doctorServiceProvider);
                 await service.approveTest(test.id, approved: true);
+                
+                // Mark doctor journey step as complete when test is approved
+                try {
+                  final patientService = ref.read(patientServiceProvider);
+                  await patientService.markJourneyStepComplete('doctor', test.patientId);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Test approved and journey step completed!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                  } catch (journeyError) {
+                    // Journey update failed, but test approval succeeded
+                    print('Journey update error: $journeyError');
+                  }
+                
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(

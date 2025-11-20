@@ -514,9 +514,9 @@ export class AdminEnhancedService {
       totalUsers: patients + doctors,
       totalPatients: patients,
       totalDoctors: doctors,
-      totalTests,
-      totalPrescriptions,
-      totalAppointments,
+      totalTests: tests,
+      totalPrescriptions: prescriptions,
+      totalAppointments: appointments,
     };
   }
 

@@ -5,6 +5,7 @@ import 'theme/app_theme.dart';
 import 'models/user_model.dart';
 import 'providers/auth_provider.dart';
 import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen.dart';
 import 'screens/patient/patient_dashboard_screen.dart';
 import 'screens/doctor/doctor_dashboard_screen.dart';
 import 'screens/admin/admin_dashboard_screen.dart';
@@ -41,13 +42,14 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/login',
     redirect: (context, state) {
       final isLoggingIn = state.matchedLocation == '/login';
+      final isRegistering = state.matchedLocation == '/register';
       final isAuthenticated = authState.valueOrNull?.isAuthenticated ?? false;
 
-      if (!isAuthenticated && !isLoggingIn) {
+      if (!isAuthenticated && !isLoggingIn && !isRegistering) {
         return '/login';
       }
 
-      if (isAuthenticated && isLoggingIn) {
+      if (isAuthenticated && (isLoggingIn || isRegistering)) {
         final userRole = authState.valueOrNull?.userRole;
         if (userRole != null) {
           switch (userRole) {
@@ -69,6 +71,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
+      GoRoute(path: '/register', builder: (context, state) => const RegisterScreen()),
       GoRoute(
         path: '/patient',
         builder: (context, state) => const PatientDashboardScreen(),

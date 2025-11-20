@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import '../config/api_endpoints.dart';
 import '../models/auth_response_model.dart';
 import '../models/user_model.dart';
@@ -28,6 +29,22 @@ class AuthService {
       await _storageHelper.saveUser(authResponse.user);
 
       return authResponse;
+    } on DioException catch (e) {
+      // Extract error message from DioException
+      String errorMessage = 'Login failed';
+      if (e.response != null) {
+        final responseData = e.response?.data;
+        if (responseData is Map<String, dynamic>) {
+          errorMessage = responseData['message'] ?? 
+                        responseData['error'] ?? 
+                        'Login failed: ${e.response?.statusCode}';
+        } else if (responseData is String) {
+          errorMessage = responseData;
+        }
+      } else {
+        errorMessage = e.message ?? 'Network error. Please check your connection.';
+      }
+      throw Exception(errorMessage);
     } catch (e) {
       rethrow;
     }
@@ -50,6 +67,22 @@ class AuthService {
       await _storageHelper.saveUser(authResponse.user);
 
       return authResponse;
+    } on DioException catch (e) {
+      // Extract error message from DioException
+      String errorMessage = 'Registration failed';
+      if (e.response != null) {
+        final responseData = e.response?.data;
+        if (responseData is Map<String, dynamic>) {
+          errorMessage = responseData['message'] ?? 
+                        responseData['error'] ?? 
+                        'Registration failed: ${e.response?.statusCode}';
+        } else if (responseData is String) {
+          errorMessage = responseData;
+        }
+      } else {
+        errorMessage = e.message ?? 'Network error. Please check your connection.';
+      }
+      throw Exception(errorMessage);
     } catch (e) {
       rethrow;
     }

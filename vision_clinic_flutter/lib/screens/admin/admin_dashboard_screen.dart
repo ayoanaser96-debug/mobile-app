@@ -106,6 +106,11 @@ final adminAnalyticsProvider = FutureProvider<Map<String, dynamic>>((
   return service.getAnalytics();
 });
 
+final adminActiveJourneysProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
+  final service = ref.watch(patientServiceProvider);
+  return service.getActiveJourneys();
+});
+
 class AdminDashboardScreen extends ConsumerStatefulWidget {
   const AdminDashboardScreen({super.key});
 
@@ -133,7 +138,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 9, vsync: this);
+    _tabController = TabController(length: 10, vsync: this);
   }
 
   @override
@@ -209,6 +214,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
             Tab(text: 'Billing', icon: Icon(Icons.attach_money)),
             Tab(text: 'Analytics', icon: Icon(Icons.bar_chart)),
             Tab(text: 'Security', icon: Icon(Icons.security)),
+            Tab(text: 'Journeys', icon: Icon(Icons.route)),
             Tab(text: 'Controls', icon: Icon(Icons.settings_remote)),
             Tab(text: 'Settings', icon: Icon(Icons.settings)),
           ],
@@ -224,6 +230,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
           _buildBillingTab(context),
           _buildAnalyticsTab(context),
           _buildSecurityTab(context),
+          _buildJourneysTab(context),
           _buildControlsTab(context),
           _buildSettingsTab(context),
         ],
@@ -1322,6 +1329,163 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
           else
             Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
         ],
+      ),
+    );
+  }
+
+  Widget _buildJourneysTab(BuildContext context) {
+    final journeysAsync = ref.watch(adminActiveJourneysProvider);
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.invalidate(adminActiveJourneysProvider);
+      },
+      child: journeysAsync.when(
+        data: (journeys) {
+          if (journeys.isEmpty) {
+            return const EmptyStateWidget(
+              icon: Icons.route,
+              title: 'No active journeys',
+              message: 'There are no active patient journeys at the moment',
+            );
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: journeys.length,
+            itemBuilder: (context, index) {
+              final journey = journeys[index];
+              final steps = journey['steps'] as List? ?? [];
+              final overallStatus = journey['overallStatus'] as String? ?? 'PENDING';
+              final currentStep = journey['currentStep'] as String?;
+              final patientName = journey['patientName'] as String? ?? 'Unknown';
+              final checkInTime = journey['checkInTime'] != null
+                  ? DateTime.parse(journey['checkInTime'])
+                  : DateTime.now();
+
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: ExpansionTile(
+                  leading: CircleAvatar(
+                    backgroundColor: overallStatus == 'COMPLETED'
+                        ? Colors.green
+                        : overallStatus == 'IN_PROGRESS'
+                            ? Colors.blue
+                            : Colors.grey,
+                    child: Icon(
+                      overallStatus == 'COMPLETED'
+                          ? Icons.check_circle
+                          : Icons.pending,
+                      color: Colors.white,
+                    ),
+                  ),
+                  title: Text(patientName),
+                  subtitle: Text(
+                    'Checked in: ${DateFormat('MMM dd, yyyy • hh:mm a').format(checkInTime)}',
+                  ),
+                  trailing: Chip(
+                    label: Text(
+                      overallStatus.toString().split('.').last,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    backgroundColor: overallStatus == 'COMPLETED'
+                        ? Colors.green.withOpacity(0.2)
+                        : overallStatus == 'IN_PROGRESS'
+                            ? Colors.blue.withOpacity(0.2)
+                            : Colors.grey.withOpacity(0.2),
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Current Step: ${currentStep ?? 'N/A'}',
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: 12),
+                          ...steps.map((step) {
+                            final stepName = step['step'] as String? ?? '';
+                            final stepStatus = step['status'] as String? ?? 'PENDING';
+                            final completedAt = step['completedAt'] != null
+                                ? DateTime.parse(step['completedAt'])
+                                : null;
+
+                            return ListTile(
+                              dense: true,
+                              leading: Icon(
+                                stepStatus == 'COMPLETED'
+                                    ? Icons.check_circle
+                                    : stepStatus == 'IN_PROGRESS'
+                                        ? Icons.radio_button_checked
+                                        : Icons.radio_button_unchecked,
+                                color: stepStatus == 'COMPLETED'
+                                    ? Colors.green
+                                    : stepStatus == 'IN_PROGRESS'
+                                        ? Colors.blue
+                                        : Colors.grey,
+                              ),
+                              title: Text(stepName),
+                              subtitle: completedAt != null
+                                  ? Text('Completed: ${DateFormat('hh:mm a').format(completedAt)}')
+                                  : null,
+                              trailing: stepStatus != 'COMPLETED'
+                                  ? ElevatedButton(
+                                      onPressed: () async {
+                                        try {
+                                          final patientService = ref.read(patientServiceProvider);
+                                          await patientService.markJourneyStepComplete(
+                                            stepName.toLowerCase(),
+                                            journey['patientId'] as String,
+                                          );
+                                          if (context.mounted) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text('Step $stepName marked as complete'),
+                                                backgroundColor: Colors.green,
+                                              ),
+                                            );
+                                            ref.invalidate(adminActiveJourneysProvider);
+                                          }
+                                        } catch (e) {
+                                          if (context.mounted) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text('Error: ${e.toString()}'),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.green,
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      ),
+                                      child: const Text('Mark Complete', style: TextStyle(fontSize: 12)),
+                                    )
+                                  : null,
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        loading: () => const LoadingWidget(message: 'Loading active journeys...'),
+        error: (error, stack) => ErrorDisplayWidget(
+          message: 'Failed to load journeys: ${error.toString()}',
+          onRetry: () {
+            ref.invalidate(adminActiveJourneysProvider);
+          },
+        ),
       ),
     );
   }

@@ -2,534 +2,204 @@
 > vision-clinic-backend@1.0.0 start:dev
 > nest start --watch
 
-[2J[3J[H[[90m12:30:47 PM[0m] Starting compilation in watch mode...
+[2J[3J[H[[90m3:41:23 PM[0m] Starting compilation in watch mode...
 
-[[90m12:30:50 PM[0m] Found 0 errors. Watching for file changes.
+[[90m3:41:26 PM[0m] Found 0 errors. Watching for file changes.
 
-(node:30800) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(node:11062) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 🚀 Starting Vision Clinic Backend...
 💾 Database: MySQL (Prisma)
 📝 Make sure MySQL is running and DATABASE_URL is set in your .env file
-[Nest] 30820  - 11/16/2025, 12:30:51 PM     LOG [NestFactory] Starting Nest application...
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] PrismaModule dependencies initialized +1179ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] PassportModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] ConfigHostModule dependencies initialized +7ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AppModule dependencies initialized +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AuditModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] ConfigModule dependencies initialized +2ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] OptometristsModule dependencies initialized +2ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] BillingModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] JwtModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] JwtModule dependencies initialized +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] UsersModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] NotificationsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AppointmentsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AnalyticsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] EyeTestsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] PrescriptionsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] PatientsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] CasesModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] PharmacyModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AdminModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] FaceRecognitionModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] DoctorsModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] ChatModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [InstanceLoader] AuthModule dependencies initialized +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [WebSocketsController] ChatGateway subscribed to the "send_message" message +8ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [WebSocketsController] ChatGateway subscribed to the "join_conversation" message +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] AppController {/}: +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/health, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] AuthController {/auth}: +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/auth/register, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/auth/login, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/auth/profile, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/auth/refresh, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] BiometricController {/biometric}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/face/register, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/face/recognize, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/face/my-face, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/face/check-in, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/document/scan, POST} route +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/document/my-documents, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/document/:type, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/biometric/document/:id/verify, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] UsersController {/users}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/users/me, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/users/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] PatientsController {/patients}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/profile, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/profile, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/medical-history, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/unified-journey, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/suggested-appointments, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/appointments/:id/wait-time, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/health-timeline, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/comparative-analysis, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/ai-insights, GET} route +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/prescription-tracking, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/billing-history, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/health-dashboard, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/final-results, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/journey/check-in, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/journey, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/journey/active, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/journey/:step/complete, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/patients/journey/receipt, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] NotificationsController {/notifications}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/notifications, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/notifications/unread-count, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/notifications/:id/read, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/notifications/mark-all-read, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/notifications/:id, DELETE} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] AppointmentsController {/appointments}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments/my-appointments, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments/upcoming, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments/:id, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/appointments/:id/cancel, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] EyeTestsController {/eye-tests}: +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/my-tests, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/pending-analysis, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/for-doctor, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/analyze, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/optometrist-notes, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/doctor-review, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] OptometristsController {/optometrists}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/optometrists/pending-tests, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/optometrists/tests/:id/analyze, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/optometrists/tests/:id/notes, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] DoctorsController {/doctors}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/doctors/assigned-patients, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/doctors/cases, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/doctors/appointments, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/doctors/tests/:id/review, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/doctors/prescriptions, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] PrescriptionsController {/prescriptions}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/my-prescriptions, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/assign-pharmacy, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/fill, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/ai-suggestions, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates/:id, GET} route +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/sign, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] AdminController {/admin}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/activity, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/activity, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/role, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/revoke-access, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, DELETE} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/analytics, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/devices, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/devices/:deviceId, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/devices/alerts, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/appointments/analytics, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/billing/analytics, GET} route +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/analytics/comprehensive, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/security/audit-logs, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/security/status, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/settings, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/settings, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/admin/devices/:deviceId/calibrate, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] PharmacyController {/pharmacy}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/qr, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/validate, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/status, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/fill, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/ai-suggestions, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/stock-forecast, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/low-stock, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/expiring-soon, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/:id, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers/:id/rating, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/delivery, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/delivery-status, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/analytics, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/analytics/drug-demand, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/check-availability, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/reject, POST} route +1ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] ChatController {/chat}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/chat/conversation, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/chat/message, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/chat/contacts, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/chat/message/:id/read, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] CasesController {/cases}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/my-cases, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/:id, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/:id/status, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/:id/delegate, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/:id/assign, PUT} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/cases/:id/timeline, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] AnalyticsController {/analytics}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/analytics/doctor-performance, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/analytics/doctor-performance/:doctorId, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/analytics/clinic-insights, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/analytics/test-trends, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] BillingController {/billing}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/billing/payment, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RoutesResolver] FaceRecognitionController {/face-recognition}: +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/register/:patientId, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/recognize, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/registered, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/remove/:patientId, DELETE} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/check-dependencies, GET} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/register-base64/:patientId, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [RouterExplorer] Mapped {/face-recognition/recognize-base64, POST} route +0ms
-[Nest] 30820  - 11/16/2025, 12:30:52 PM     LOG [NestApplication] Nest application successfully started +26ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [NestFactory] Starting Nest application...
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] PrismaModule dependencies initialized +24ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] PassportModule dependencies initialized +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] ConfigHostModule dependencies initialized +12ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AppModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AuditModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] ConfigModule dependencies initialized +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] OptometristsModule dependencies initialized +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] JwtModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] JwtModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] UsersModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] NotificationsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AppointmentsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AnalyticsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] EyeTestsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] PrescriptionsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] BillingModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] PatientsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] CasesModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] PharmacyModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AdminModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] FaceRecognitionModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] DoctorsModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] ChatModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [InstanceLoader] AuthModule dependencies initialized +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [WebSocketsController] ChatGateway subscribed to the "send_message" message +6ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [WebSocketsController] ChatGateway subscribed to the "join_conversation" message +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] AppController {/}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/, GET} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/health, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] AuthController {/auth}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/auth/register, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/auth/login, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/auth/profile, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/auth/refresh, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] BiometricController {/biometric}: +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/face/register, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/face/recognize, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/face/my-face, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/face/check-in, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/document/scan, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/document/my-documents, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/document/:type, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/biometric/document/:id/verify, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] UsersController {/users}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/users/me, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/users/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/users/doctors, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] PatientsController {/patients}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/profile, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/profile, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/medical-history, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/unified-journey, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/suggested-appointments, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/appointments/:id/wait-time, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/health-timeline, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/comparative-analysis, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/ai-insights, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/prescription-tracking, GET} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/billing-history, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/health-dashboard, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/final-results, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/journey/check-in, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/journey, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/journey/active, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/journey/:step/complete, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/patients/journey/receipt, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] NotificationsController {/notifications}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/notifications, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/notifications/unread-count, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/notifications/:id/read, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/notifications/mark-all-read, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/notifications/:id, DELETE} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] AppointmentsController {/appointments}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments/my-appointments, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments/upcoming, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments/:id, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/appointments/:id/cancel, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] EyeTestsController {/eye-tests}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/my-tests, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/pending-analysis, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/for-doctor, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/analyze, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/optometrist-notes, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/eye-tests/:id/doctor-review, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] OptometristsController {/optometrists}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/optometrists/pending-tests, GET} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/optometrists/tests/:id/analyze, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/optometrists/tests/:id/notes, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] DoctorsController {/doctors}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/doctors/assigned-patients, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/doctors/cases, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/doctors/appointments, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/doctors/tests/:id/review, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/doctors/prescriptions, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] PrescriptionsController {/prescriptions}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/my-prescriptions, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/assign-pharmacy, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/fill, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/ai-suggestions, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/templates/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/prescriptions/:id/sign, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] AdminController {/admin}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/activity, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/activity, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/role, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id/revoke-access, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/users/:id, DELETE} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/analytics, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/devices, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/devices/:deviceId, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/devices/alerts, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/appointments/analytics, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/billing/analytics, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/analytics/comprehensive, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/security/audit-logs, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/security/status, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/settings, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/settings, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/devices/:deviceId/calibrate, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/dashboard-stats, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/controls/lockdown, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/controls/broadcast, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/admin/automation/:ruleKey, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] PharmacyController {/pharmacy}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/qr, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/validate, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/status, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/fill, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/ai-suggestions, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/stock-forecast, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/low-stock, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/expiring-soon, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/inventory/:id, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/suppliers/:id/rating, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/delivery, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/delivery-status, PUT} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/analytics, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/analytics/drug-demand, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/check-availability, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/pharmacy/prescriptions/:id/reject, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] ChatController {/chat}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/chat/conversation, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/chat/message, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/chat/contacts, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/chat/message/:id/read, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] CasesController {/cases}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/my-cases, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/:id, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/:id/status, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/:id/delegate, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/:id/assign, PUT} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/cases/:id/timeline, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] AnalyticsController {/analytics}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/analytics/doctor-performance, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/analytics/doctor-performance/:doctorId, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/analytics/clinic-insights, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/analytics/test-trends, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] BillingController {/billing}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/billing/payment, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/billing/receipt/:transactionId, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/billing/receipt/:transactionId/download, GET} route +1ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RoutesResolver] FaceRecognitionController {/face-recognition}: +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/register/:patientId, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/recognize, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/registered, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/remove/:patientId, DELETE} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/check-dependencies, GET} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/register-base64/:patientId, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [RouterExplorer] Mapped {/face-recognition/recognize-base64, POST} route +0ms
+[Nest] 11100  - 11/20/2025, 3:41:27 PM     LOG [NestApplication] Nest application successfully started +155ms
 ✅ Application is running on: http://localhost:3001
 📊 Health check: http://localhost:3001/health
 🌐 CORS enabled for: http://localhost:3000
 💾 Database: MySQL via Prisma
-Registration request received: {
-  email: 'test@test.com',
-  password: '***',
-  firstName: 'Test',
-  lastName: 'User',
-  role: 'OPTOMETRIST'
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-Registration service error: PrismaClientUnknownRequestError: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at ei.handleRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:237:13)
-    at ei.handleAndLogRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12)
-    at ei.request (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12)
-    at async a (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24)
-    at async AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:20)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17 {
-  clientVersion: '6.18.0'
-}
-Registration error: ConflictException: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:137:13)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17 {
-  response: {
-    message: '\n' +
-      'Invalid `this.prisma.user.create()` invocation in\n' +
-      '/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43\n' +
-      '\n' +
-      '  109   }\n' +
-      '  110 }\n' +
-      '  111 \n' +
-      '→ 112 const user = await this.prisma.user.create(\n' +
-      'Error occurred during query execution:\n' +
-      `ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })`,
-    error: 'Conflict',
-    statusCode: 409
-  },
-  status: 409,
-  options: {}
-}
-Error stack: ConflictException: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:137:13)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17
-Registration request received: {
-  email: 'testoptometrist@test.com',
-  password: '***',
-  firstName: 'Test',
-  lastName: 'Optometrist',
-  role: 'OPTOMETRIST'
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-Registration service error: PrismaClientUnknownRequestError: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at ei.handleRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:237:13)
-    at ei.handleAndLogRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12)
-    at ei.request (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12)
-    at async a (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24)
-    at async AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:20)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17 {
-  clientVersion: '6.18.0'
-}
-Registration error: ConflictException: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:137:13)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17 {
-  response: {
-    message: '\n' +
-      'Invalid `this.prisma.user.create()` invocation in\n' +
-      '/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43\n' +
-      '\n' +
-      '  109   }\n' +
-      '  110 }\n' +
-      '  111 \n' +
-      '→ 112 const user = await this.prisma.user.create(\n' +
-      'Error occurred during query execution:\n' +
-      `ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })`,
-    error: 'Conflict',
-    statusCode: 409
-  },
-  status: 409,
-  options: {}
-}
-Error stack: ConflictException: 
-Invalid `this.prisma.user.create()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:112:43
-
-  109   }
-  110 }
-  111 
-→ 112 const user = await this.prisma.user.create(
-Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(Server(MysqlError { code: 1265, message: "Data truncated for column 'role' at row 1", state: "01000" })), transient: false })
-    at AuthService.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.service.ts:137:13)
-    at async AuthController.register (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/auth/auth.controller.ts:25:27)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17
-Registration request received: {
-  email: 'testoptometrist2@test.com',
-  password: '***',
-  firstName: 'Test',
-  lastName: 'Optometrist',
-  role: 'OPTOMETRIST'
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-Registration request received: {
-  email: 'vydifatym@mailinator.com',
-  phone: '+1 (219) 391-5359',
-  nationalId: 'Quibusdam voluptatem',
-  password: '***',
-  firstName: 'Sydney',
-  lastName: 'Wright',
-  role: 'OPTOMETRIST',
-  specialty: ''
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-Registration request received: {
-  email: 'ayoa.naser96@gmail.com',
-  phone: '00000000',
-  nationalId: '00000000',
-  password: '***',
-  firstName: 'aya',
-  lastName: 'naser',
-  role: 'PATIENT',
-  specialty: ''
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-[2J[3J[H[[90m12:51:43 PM[0m] File change detected. Starting incremental compilation...
-
-[96msrc/billing/billing.controller.ts[0m:[93m25[0m:[93m7[0m - [91merror[0m[90m TS2554: [0mExpected 2-3 arguments, but got 5.
-
-[7m25[0m       body.invoiceId,
-[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
-[7m26[0m       body.description,
-[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~[0m
-
-[96msrc/billing/billing.controller.ts[0m:[93m37[0m:[93m32[0m - [91merror[0m[90m TS2339: [0mProperty 'getReceipt' does not exist on type 'BillingService'.
-
-[7m37[0m     return this.billingService.getReceipt(transactionId, req.user.id);
-[7m  [0m [91m                               ~~~~~~~~~~[0m
-
-[96msrc/billing/billing.controller.ts[0m:[93m48[0m:[93m47[0m - [91merror[0m[90m TS2339: [0mProperty 'generateReceiptHTML' does not exist on type 'BillingService'.
-
-[7m48[0m     const receipt = await this.billingService.generateReceiptHTML(transactionId, req.user.id);
-[7m  [0m [91m                                              ~~~~~~~~~~~~~~~~~~~[0m
-
-[[90m12:51:43 PM[0m] Found 3 errors. Watching for file changes.
-
-[2J[3J[H[[90m12:52:18 PM[0m] File change detected. Starting incremental compilation...
-
-[96msrc/billing/billing.controller.ts[0m:[93m33[0m:[93m9[0m - [91merror[0m[90m TS4053: [0mReturn type of public method from exported class has or is using name 'Receipt' from external module "/Users/ayoa/Documents/GitHub/vision-pro/backend/src/billing/billing.service" but cannot be named.
-
-[7m33[0m   async getReceipt(
-[7m  [0m [91m        ~~~~~~~~~~[0m
-
-[[90m12:52:18 PM[0m] Found 1 error. Watching for file changes.
-
-[2J[3J[H[[90m12:54:28 PM[0m] File change detected. Starting incremental compilation...
-
-[96msrc/billing/billing.controller.ts[0m:[93m33[0m:[93m9[0m - [91merror[0m[90m TS4053: [0mReturn type of public method from exported class has or is using name 'Receipt' from external module "/Users/ayoa/Documents/GitHub/vision-pro/backend/src/billing/billing.service" but cannot be named.
-
-[7m33[0m   async getReceipt(
-[7m  [0m [91m        ~~~~~~~~~~[0m
-
-[[90m12:54:28 PM[0m] Found 1 error. Watching for file changes.
-
-Login request received: { identifier: 'ayoa.naser96@gmail.com', password: '***' }
-[2J[3J[H[[90m1:01:43 PM[0m] File change detected. Starting incremental compilation...
-
-[96msrc/billing/billing.controller.ts[0m:[93m33[0m:[93m9[0m - [91merror[0m[90m TS4053: [0mReturn type of public method from exported class has or is using name 'Receipt' from external module "/Users/ayoa/Documents/GitHub/vision-pro/backend/src/billing/billing.service" but cannot be named.
-
-[7m33[0m   async getReceipt(
-[7m  [0m [91m        ~~~~~~~~~~[0m
-
-[[90m1:01:43 PM[0m] Found 1 error. Watching for file changes.
-
-Registration request received: {
-  email: 'hihevavafy@mailinator.com',
-  phone: '+1 (134) 494-3912',
-  nationalId: 'Nisi voluptas odit e',
-  password: '***',
-  firstName: 'Maggie',
-  lastName: 'Frank',
-  role: 'ADMIN',
-  specialty: ''
-}
-UserRole enum values: [ 'PATIENT', 'OPTOMETRIST', 'DOCTOR', 'ADMIN', 'PHARMACY' ]
-[Nest] 30820  - 11/16/2025, 1:06:55 PM   ERROR [ExceptionsHandler] 
-Invalid `this.prisma.case.findMany()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:42
-
-  65 }
-  66 
-  67 private async calculateAvgResponseTime(doctorId: string, dateFilter: any): Promise<number> {
-→ 68   const cases = await this.prisma.case.findMany({
-         where: {
-           assignedDoctors: {
-             has: "276f45f7-52b8-42ab-9dce-80bb3baff394",
-             ~~~
-       ?     every?: UserWhereInput,
-       ?     some?: UserWhereInput,
-       ?     none?: UserWhereInput
-           }
-         }
-       })
-
-Unknown argument `has`. Available options are marked with ?.
-PrismaClientValidationError: 
-Invalid `this.prisma.case.findMany()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:42
-
-  65 }
-  66 
-  67 private async calculateAvgResponseTime(doctorId: string, dateFilter: any): Promise<number> {
-→ 68   const cases = await this.prisma.case.findMany({
-         where: {
-           assignedDoctors: {
-             has: "276f45f7-52b8-42ab-9dce-80bb3baff394",
-             ~~~
-       ?     every?: UserWhereInput,
-       ?     some?: UserWhereInput,
-       ?     none?: UserWhereInput
-           }
-         }
-       })
-
-Unknown argument `has`. Available options are marked with ?.
-    at throwValidationException (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/core/errorRendering/throwValidationException.ts:45:9)
-    at ei.handleRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:202:7)
-    at ei.handleAndLogRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12)
-    at ei.request (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12)
-    at async a (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24)
-    at async AnalyticsService.calculateAvgResponseTime (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:19)
-    at async Promise.all (index 2)
-    at async AnalyticsService.getDoctorPerformance (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:19:61)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17
-[Nest] 30820  - 11/16/2025, 1:06:55 PM   ERROR [ExceptionsHandler] 
-Invalid `this.prisma.case.findMany()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:42
-
-  65 }
-  66 
-  67 private async calculateAvgResponseTime(doctorId: string, dateFilter: any): Promise<number> {
-→ 68   const cases = await this.prisma.case.findMany({
-         where: {
-           assignedDoctors: {
-             has: "276f45f7-52b8-42ab-9dce-80bb3baff394",
-             ~~~
-       ?     every?: UserWhereInput,
-       ?     some?: UserWhereInput,
-       ?     none?: UserWhereInput
-           }
-         }
-       })
-
-Unknown argument `has`. Available options are marked with ?.
-PrismaClientValidationError: 
-Invalid `this.prisma.case.findMany()` invocation in
-/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:42
-
-  65 }
-  66 
-  67 private async calculateAvgResponseTime(doctorId: string, dateFilter: any): Promise<number> {
-→ 68   const cases = await this.prisma.case.findMany({
-         where: {
-           assignedDoctors: {
-             has: "276f45f7-52b8-42ab-9dce-80bb3baff394",
-             ~~~
-       ?     every?: UserWhereInput,
-       ?     some?: UserWhereInput,
-       ?     none?: UserWhereInput
-           }
-         }
-       })
-
-Unknown argument `has`. Available options are marked with ?.
-    at throwValidationException (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/core/errorRendering/throwValidationException.ts:45:9)
-    at ei.handleRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:202:7)
-    at ei.handleAndLogRequestError (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:174:12)
-    at ei.request (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/RequestHandler.ts:143:12)
-    at async a (/Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:833:24)
-    at async AnalyticsService.calculateAvgResponseTime (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:68:19)
-    at async Promise.all (index 2)
-    at async AnalyticsService.getDoctorPerformance (/Users/ayoa/Documents/GitHub/vision-pro/backend/src/analytics/analytics.service.ts:19:61)
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-execution-context.js:46:28
-    at async /Users/ayoa/Documents/GitHub/vision-pro/backend/node_modules/@nestjs/core/router/router-proxy.js:9:17
-Login request received: { identifier: 'ayoa.naser96@gmail.com', password: '***' }

@@ -18,9 +18,33 @@ async function bootstrap() {
       logger: ['error', 'warn', 'log'],
     });
     
-    // Enable CORS for offline operation
+    // Enable CORS for offline operation and Flutter web
     app.enableCors({
-      origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'],
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps, Postman, or Flutter web)
+        if (!origin) {
+          return callback(null, true);
+        }
+        // Allow localhost from any port (for Flutter web and other local dev)
+        const allowedOrigins = [
+          /^http:\/\/localhost:\d+$/,
+          /^http:\/\/127\.0\.0\.1:\d+$/,
+          'http://localhost:3000',
+          'http://localhost:3001',
+          'http://127.0.0.1:3000',
+          'http://127.0.0.1:3001',
+        ];
+        
+        const isAllowed = allowedOrigins.some(allowed => {
+          if (typeof allowed === 'string') {
+            return origin === allowed;
+          } else {
+            return allowed.test(origin);
+          }
+        });
+        
+        callback(null, isAllowed);
+      },
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
       credentials: true,

@@ -17,7 +17,7 @@ Appointment _$AppointmentFromJson(Map<String, dynamic> json) => Appointment(
       ? null
       : User.fromJson(json['doctor'] as Map<String, dynamic>),
   appointmentDate: DateTime.parse(json['appointmentDate'] as String),
-  appointmentTime: json['appointmentTime'] as String,
+  appointmentTime: json['appointmentTime'] as String?,
   type: $enumDecode(_$AppointmentTypeEnumMap, json['type']),
   status: $enumDecode(_$AppointmentStatusEnumMap, json['status']),
   reason: json['reason'] as String?,

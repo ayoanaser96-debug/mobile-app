@@ -5,7 +5,9 @@ part 'auth_response_model.g.dart';
 
 @JsonSerializable()
 class AuthResponse {
+  @JsonKey(name: 'access_token')
   final String accessToken;
+  @JsonKey(name: 'refresh_token')
   final String? refreshToken;
   final User user;
 
@@ -19,6 +21,8 @@ class AuthResponse {
       _$AuthResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
 }
+
+
 
 
 

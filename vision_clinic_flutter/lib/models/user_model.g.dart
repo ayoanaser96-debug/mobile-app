@@ -14,17 +14,19 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
   firstName: json['firstName'] as String,
   lastName: json['lastName'] as String,
   role: $enumDecode(_$UserRoleEnumMap, json['role']),
-  status: $enumDecode(_$UserStatusEnumMap, json['status']),
+  status:
+      $enumDecodeNullable(_$UserStatusEnumMap, json['status']) ??
+      UserStatus.active,
   specialty: json['specialty'] as String?,
   profileImage: json['profileImage'] as String?,
   dateOfBirth: json['dateOfBirth'] == null
       ? null
       : DateTime.parse(json['dateOfBirth'] as String),
   address: json['address'] as String?,
-  emailVerified: json['emailVerified'] as bool,
-  phoneVerified: json['phoneVerified'] as bool,
-  createdAt: DateTime.parse(json['createdAt'] as String),
-  updatedAt: DateTime.parse(json['updatedAt'] as String),
+  emailVerified: json['emailVerified'] as bool? ?? false,
+  phoneVerified: json['phoneVerified'] as bool? ?? false,
+  createdAt: User._dateTimeFromJson(json['createdAt']),
+  updatedAt: User._dateTimeFromJson(json['updatedAt']),
 );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -42,8 +44,8 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'address': instance.address,
   'emailVerified': instance.emailVerified,
   'phoneVerified': instance.phoneVerified,
-  'createdAt': instance.createdAt.toIso8601String(),
-  'updatedAt': instance.updatedAt.toIso8601String(),
+  'createdAt': User._dateTimeToJson(instance.createdAt),
+  'updatedAt': User._dateTimeToJson(instance.updatedAt),
 };
 
 const _$UserRoleEnumMap = {

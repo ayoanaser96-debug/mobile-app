@@ -31,7 +31,7 @@ class Appointment {
   final String? doctorId;
   final User? doctor;
   final DateTime appointmentDate;
-  final String appointmentTime;
+  final String? appointmentTime;
   final AppointmentType type;
   final AppointmentStatus status;
   final String? reason;
@@ -47,7 +47,7 @@ class Appointment {
     this.doctorId,
     this.doctor,
     required this.appointmentDate,
-    required this.appointmentTime,
+    this.appointmentTime,
     required this.type,
     required this.status,
     this.reason,
@@ -61,5 +61,8 @@ class Appointment {
       _$AppointmentFromJson(json);
   Map<String, dynamic> toJson() => _$AppointmentToJson(this);
 }
+
+
+
 
 
